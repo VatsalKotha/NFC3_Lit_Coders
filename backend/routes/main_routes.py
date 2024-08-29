@@ -161,6 +161,11 @@ def add_order():
         payment_id = request.json.get("payment_id")
         order_status = "Pending"
         expected_fulfilment_date = fps_store.next_available_date
+
+        #calculate total amount
+        total_amount = 0
+        for item in user.cart:
+            total_amount += item.actual_price * item.quantity
         
         new_order = Order(
             order_id=order_id,
@@ -171,7 +176,8 @@ def add_order():
             payment_method=payment_method,
             payment_id=payment_id,
             order_status=order_status,
-            products=user.cart
+            products=user.cart,
+            total_amount=total_amount
         )
         
         user.current_quantity_consumed += total_cart_quantity

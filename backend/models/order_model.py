@@ -25,10 +25,11 @@ class ProductOrder:
         )
         
 class Order:
-    def __init__(self, order_id, fps_id, ration_card_id, order_type, expected_fulfilment_date,
+    def __init__(self, order_id, fps_id, ration_card_id, order_type, expected_fulfilment_date, total_amount,
                  payment_method, payment_id, order_status, products=None):
         self.order_id = order_id
         self.fps_id = fps_id
+        self.total_amount = total_amount
         self.ration_card_id = ration_card_id
         self.order_type = order_type  
         self.expected_fulfilment_date = expected_fulfilment_date
@@ -42,6 +43,7 @@ class Order:
             "order_id": self.order_id,
             "fps_id": self.fps_id,
             "ration_card_id": self.ration_card_id,
+            "total_amount": self.total_amount,
             "order_type": self.order_type,
             "expected_fulfilment_date": self.expected_fulfilment_date.strftime('%Y-%m-%d'),
             "payment_method": self.payment_method,
@@ -58,6 +60,7 @@ class Order:
             fps_id=data.get("fps_id"),
             ration_card_id=data.get("ration_card_id"),
             order_type=data.get("order_type"),
+            total_amount=data.get("total_amount"),
             expected_fulfilment_date=datetime.strptime(data.get("expected_fulfilment_date"), '%Y-%m-%d'),
             payment_method=data.get("payment_method"),
             payment_id=data.get("payment_id"),
