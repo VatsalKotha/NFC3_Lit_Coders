@@ -1,83 +1,56 @@
-// Navbar.jsx
-import React, { useState } from 'react';
-import './Navbar.css';
+import React from 'react';
+import { FaClipboardList, FaTruck, FaCheck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaClipboardCheck, FaTimesCircle } from 'react-icons/fa';
 
-const Navbar = () => {
-  const [option, setOption] = useState('delivery'); // State to track selected option (delivery or pickup)
-  const [location, setLocation] = useState('Mumbai'); // State for location
-  const [address, setAddress] = useState(''); // State for address or pincode
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State to manage mobile menu visibility
-
-  const handleOptionChange = (newOption) => {
-    setOption(newOption);
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
+const Sidebar = () => {
   return (
-    <nav className="navbar">
-      <div className="navbar-options">
-        <button
-          className={`toggle-btn ${option === 'delivery' ? 'active' : ''}`}
-          onClick={() => handleOptionChange('delivery')}
-        >
-          Delivery
-        </button>
-        <button
-          className={`toggle-btn ${option === 'pickup' ? 'active' : ''}`}
-          onClick={() => handleOptionChange('pickup')}
-        >
-          Pickup
-        </button>
+    <div className="w-64 h-screen bg-custom-purple 600 text-white">
+      <div className="flex items-center justify-center p-4 text-xl font-bold border-b border-blue-500">
+        <span className="mr-2">RationGo</span>
       </div>
-
-      {option === 'delivery' ? (
-        <div className="navbar-delivery">
-          <div className="delivery-input">
-            <input
-              type="text"
-              placeholder="Enter city"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="location-input"
-            />
-          </div>
-          <div className="address-input">
-            <input
-              type="text"
-              placeholder="Enter address or pincode"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="address-input-field"
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="navbar-pickup">
-          <span className="store-address">Store Address: 123 Main Street, Mumbai</span>
-        </div>
-      )}
-
-      <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
-        ☰
-      </button>
-
-      <div className={`navbar-links ${isMobileMenuOpen ? 'active' : ''}`}>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Categories</a></li>
-          <li><a href="#">Products</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-
-      <div className="navbar-actions">
-        <button className="login-btn">Login</button>
-      </div>
-    </nav>
+      <ul className="mt-5">
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaClipboardList className="mr-3" />
+          <span>Dashboard</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaClipboardCheck className="mr-3" />
+          <span>All Orders</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaCheck className="mr-3" />
+          <span>Orders Placed</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaTruck className="mr-3" />
+          <span>Orders Out For Pickup</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaBoxOpen className="mr-3" />
+          <span>Orders Received</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaCogs className="mr-3" />
+          <span>Orders Processing</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaTshirt className="mr-3" />
+          <span>Orders Processed</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaShippingFast className="mr-3" />
+          <span>Orders Out For Delivery</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaClipboardCheck className="mr-3" />
+          <span>Orders Delivered</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaTimesCircle className="mr-3" />
+          <span>Orders Cancelled</span>
+        </li>
+      </ul>
+    </div>
   );
 };
 
-export default Navbar;
+export default Sidebar;

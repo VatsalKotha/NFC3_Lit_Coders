@@ -1,57 +1,24 @@
-// src/pages/Home.jsx
 import React from 'react';
-import Navbar from '../Components/Navbar/Navbar';
-import CategoryCard from '../Components/Card/CategoryCard';
-import ProductCard from '../Components/Card/ProductCard'; // Import ProductCard
-import grains from '../assets/grains.jpg';
-import pulses from '../assets/pulses.jpg';
-import rice from '../assets/rice.jpg';
-import bannerImage from '../assets/banner.jpg'; // Import the banner image
-import './Home.css'; // Import the CSS file for styling
+import Sidebar from '../Components/Navbar/Navbar';
+import Card from '../Components/Card/CategoryCard';
+import { FaClipboardCheck, FaCheck, FaTruck, FaBoxOpen, FaCogs, FaTshirt , FaShippingFast, FaTimesCircle } from 'react-icons/fa';
 
 const Home = () => {
-  const categories = [
-    { image: grains, title: 'Grains', description: 'Explore' },
-    { image: pulses, title: 'Pulses', description: 'Explore' },
-    { image: rice, title: 'Rice', description: 'Explore' },
-  ];
-
-  const products = [
-    { image: grains, name: 'Grains', price: 100 },
-    { image: pulses, name: 'Pulses', price: 45 },
-    { image: rice, name: 'Rice', price: 39 },
-  ];
-
   return (
-    <div className="home-container">
-      <Navbar />
-      <div className="banner">
-        <img src={bannerImage} alt="Banner" className="banner-image" />
-      </div>
-      <div className="section">
-        <h1 className="section-heading">Categories</h1>
-        <div className="category-cards-container">
-          {categories.map((category, index) => (
-            <CategoryCard
-              key={index}
-              image={category.image}
-              title={category.title}
-              description={category.description}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="section">
-        <h1 className="section-heading">Products</h1>
-        <div className="product-cards-container">
-          {products.map((product, index) => (
-            <ProductCard
-              key={index}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-            />
-          ))}
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 p-10 bg-gray-100">
+        <h1 className="text-2xl font-bold mb-6">Welcome to RationGo</h1>
+        <div className="grid grid-cols-3 gap-6">
+          <Card title="All Orders" description="Manage all of your orders" icon={<FaClipboardCheck />} />
+          <Card title="Orders Placed" description="Manage all currently placed orders" icon={<FaCheck />} />
+          <Card title="Orders Out For Pickup" description="Manage all currently out for pickup orders" icon={<FaTruck />} />
+          <Card title="Orders Received" description="Manage all currently picked up and received orders" icon={<FaBoxOpen />} />
+          <Card title="Orders Processing" description="Manage all currently processing orders" icon={<FaCogs />} />
+          <Card title="Orders Processed" description="Manage all currently processed orders" icon={<FaTshirt  />} />
+          <Card title="Orders Out For Delivery" description="Manage all currently out for delivery orders" icon={<FaShippingFast />} />
+          <Card title="Orders Delivered" description="Manage all delivered orders" icon={<FaCheck />} />
+          <Card title="Orders Cancelled" description="Manage all cancelled orders" icon={<FaTimesCircle />} />
         </div>
       </div>
     </div>

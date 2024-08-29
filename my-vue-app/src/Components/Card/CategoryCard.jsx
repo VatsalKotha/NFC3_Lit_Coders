@@ -1,17 +1,17 @@
-// CategoryCard.jsx
 import React from 'react';
-import './CategoryCard.css';
 
-const CategoryCard = ({ image, title, description }) => {
+const Card = ({ title, description, icon }) => {
   return (
-    <div className="category-card">
-      <img src={image} alt={title} className="category-card-image" />
-      <div className="category-card-content">
-        <h3 className="category-card-title">{title}</h3>
-        <p className="category-card-description">{description}</p>
+    <div className="bg-custom-purple 500 text-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+      <div className="text-4xl">
+        {icon}
+      </div>
+      <div>
+        <h2 className="text-xl font-bold">{title}</h2>
+        <p>{description}</p>
       </div>
     </div>
   );
 };
 
-export default CategoryCard;
+export default Card;
