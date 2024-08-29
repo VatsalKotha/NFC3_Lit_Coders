@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaClipboardList, FaTruck, FaCheck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaClipboardCheck, FaTimesCircle } from 'react-icons/fa';
+import { FaClipboardList, FaTruck, FaCheck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaClipboardCheck, FaTimesCircle, FaSignOutAlt } from 'react-icons/fa';
 
 const Sidebar = () => {
   return (
@@ -47,6 +47,10 @@ const Sidebar = () => {
         <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
           <FaTimesCircle className="mr-3" />
           <span>Orders Cancelled</span>
+        </li>
+        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
+          <FaSignOutAlt className="mr-3" />
+          <span>Logout</span>
         </li>
       </ul>
     </div>

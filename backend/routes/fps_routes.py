@@ -44,6 +44,7 @@ def add_or_update_product():
 @fps_bp.route('/get_global_products', methods=['POST'])
 @jwt_required()
 def get_global_products():
+    
     try:
         current_user = get_jwt_identity()
         fps_id = current_user["fps_id"]
