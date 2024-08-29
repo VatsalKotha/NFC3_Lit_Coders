@@ -98,8 +98,9 @@ class _ProductStateState extends State<Product> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                     child: Image.network(
-                      "https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png",
-                      height: 80,
+                      widget.product_image,
+                      height: 100,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ],

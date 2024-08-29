@@ -44,7 +44,7 @@ class _BottomnavbarState extends State<bottomNavbar> {
         ),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.inventory_2,
+              Icons.local_grocery_store_outlined,
             ),
             label: 'Products'),
         BottomNavigationBarItem(

@@ -155,14 +155,17 @@ class _ProductScreenState extends State<ProductScreen> {
                               fontWeight: FontWeight.w600,
                               color: AppColors.black)),
                       if (true)
-                        SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: state.products
+                        Row(
+                          children: [
+                            Expanded(
+                              child: state.products
                                   .where((product) =>
                                       product.product_category == "Fuel")
-                                  .toList(),
-                            )),
+                                  .toList()
+                                  .first,
+                            )
+                          ],
+                        ),
                     ],
                   );
                 } else {
