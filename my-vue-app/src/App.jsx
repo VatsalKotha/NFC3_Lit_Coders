@@ -1,29 +1,14 @@
-// import { useState } from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Home from "./pages/Home";
-
-// function App() {
-//   return (
-//     <>
-//       <Routes>
-//         <Route path="/" element={<Login />} />
-//       </Routes>
-//     </> 
-//   );
-// }
-
-// export default App;
-// src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from './pages/Home'; // Ensure this path is correct
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import OTP from "./pages/OTP"
 
 function App() {
   return (
-    <Router> {/* Wrap your Routes in a Router */}
+    <Router>
       <Routes>
-        <Route path="/" element={<Home />} /> {/* Ensure path and component match */}
+        <Route path="/" element={<Login />} />
+        <Route path="/otp" element={<OTP />} />
       </Routes>
     </Router>
   );
