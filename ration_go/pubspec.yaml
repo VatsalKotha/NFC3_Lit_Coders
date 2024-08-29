@@ -17,6 +17,7 @@ dependencies:
   flutter_otp_text_field: ^1.2.0
   carousel_slider: ^5.0.0
   shared_preferences: ^2.3.2
+  meta: ^1.12.0
 
 dev_dependencies:
   flutter_test:

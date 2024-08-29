@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-
-import 'package:ration_go/features/auth/bloc/auth_bloc_bloc.dart';
+import 'package:ration_go/features/auth/bloc/auth_bloc.dart';
 import 'package:ration_go/features/auth/ui/login_screen.dart';
 import 'package:ration_go/features/auth/ui/splash_screen.dart';
-import 'package:ration_go/features/home/ui/home_screen.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart' as gt;
+import 'package:ration_go/features/home/ui/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,9 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBlocBloc>(
-          create: (context) => AuthBlocBloc(Dio()),
-        ),
+        BlocProvider(
+          create: (BuildContext context) => AuthBloc(Dio()),
+        )
       ],
       child: GetMaterialApp(
           title: 'Flutter Demo',
