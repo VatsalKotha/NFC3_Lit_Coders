@@ -3,7 +3,11 @@ export default {
   content: ["./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-purple': '#613CB1', // Add custom color
+      },
+    },
   },
   plugins: [],
 }
