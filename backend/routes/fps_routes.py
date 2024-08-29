@@ -22,6 +22,9 @@ def add_or_update_product():
 
         data = request.get_json()         
         new_product = Product.from_dict(data)  
+        
+        global_product = db.products.find_one({'product_id':new_product.product_id})
+        new_product.product_name = global_product['product_name']
 
         # Remove the product if it already exists
         db.fps.update_one(
