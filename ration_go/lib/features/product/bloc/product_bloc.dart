@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:ration_go/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../common/server.dart';
+import '../../../common/server.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

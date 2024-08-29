@@ -10,7 +10,7 @@ import 'package:ration_go/features/auth/ui/login_screen.dart';
 import 'package:ration_go/features/auth/ui/splash_screen.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart' as gt;
 import 'package:ration_go/features/home/ui/home_screen.dart';
-import 'package:ration_go/features/product/ui/bloc/product_bloc.dart';
+import 'package:ration_go/features/product/bloc/product_bloc.dart';
 import 'package:ration_go/features/product/ui/product_screen.dart';
 
 void main() {

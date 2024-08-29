@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
-import 'package:ration_go/features/product/ui/bloc/product_bloc.dart';
+import 'package:ration_go/features/product/bloc/product_bloc.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
