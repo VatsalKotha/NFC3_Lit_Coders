@@ -36,7 +36,7 @@ class User:
             "address": self.address,
             "class_of_ration": self.class_of_ration,
             "email": self.email,
-            "phone": self.phone,
+            "contact_number": self.phone,
             "cart": [product_order.to_dict() for product_order in self.cart],  # Convert ProductOrder to dict
         }
 
@@ -51,11 +51,11 @@ class User:
             members_list=data.get("members_list", []),
             total_monthly_quantity=data.get("total_monthly_quantity"),
             current_quantity_consumed=data.get("current_quantity_consumed", 0),
-            has_lpg=data.get("has_lpg"),
+            has_lpg= bool(data.get("has_lpg")),
             date_of_issue=datetime.strptime(data.get("date_of_issue"), '%Y-%m-%d'),
             address=data.get("address"),
             class_of_ration=data.get("class_of_ration"),
             email=data.get("email"),
-            phone=data.get("phone"),
+            phone= str(data.get("contact_number"))   ,
             cart=cart,
         )

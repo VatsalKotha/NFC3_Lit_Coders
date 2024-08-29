@@ -40,6 +40,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           }
           emit(ProductSuccess(
             products,
+            response.data['user'],
+            response.data['fps_store'],
           ));
         } else {
           emit(ProductFailure('Failed to send OTP'));

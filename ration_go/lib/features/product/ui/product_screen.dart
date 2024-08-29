@@ -148,6 +148,21 @@ class _ProductScreenState extends State<ProductScreen> {
                                 .toList(),
                           )),
                       Divider(color: Colors.grey.shade300),
+                      //
+                      const Text("Fuel and Gas",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black)),
+                      if (state.user['has_lpg'])
+                        SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: state.products
+                                  .where((product) =>
+                                      product.product_category == "Fuel")
+                                  .toList(),
+                            )),
                     ],
                   );
                 } else {

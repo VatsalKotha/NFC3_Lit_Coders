@@ -21,8 +21,10 @@ final class ProductFailure extends ProductState {
 
 final class ProductSuccess extends ProductState {
   List<Product> products;
+  var user;
+  var fps_store;
 
-  ProductSuccess(this.products);
+  ProductSuccess(this.products, this.user, this.fps_store);
 }
 
 class Product extends StatefulWidget {
