@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from models.order_model import ProductOrder
+from models.order_model import Order, ProductOrder
 from settings.db import db
 from settings.auth_utils import get_store_by_fps_id, get_user_by_ration_card_id
 
@@ -98,7 +98,9 @@ def add_to_cart():
                     {"ration_card_id": ration_card_id},
                     {"$set": {"cart": [prod.to_dict() for prod in user.cart]}}
                 )
-            return jsonify({"msg": "Product removed from cart"}), 200
+            updated_user = get_user_by_ration_card_id(ration_card_id)
+            store = get_store_by_fps_id(user.fps_code)
+            return jsonify({"msg": "Product removed from cart successfully!","user":updated_user.to_dict(),"store":store.to_dict()}), 200
 
         if existing_cart_item:
             user.cart.remove(existing_cart_item)
@@ -106,7 +108,7 @@ def add_to_cart():
         product_order = ProductOrder(
             product_id=fps_product.product_id,
             product_name=fps_product.product_name,
-            available_quantity=quantity,
+            quantity=quantity,
             actual_price=actual_price
         )
 
@@ -124,7 +126,66 @@ def add_to_cart():
             {"$set": {"products.$.available_quantity": fps_product.available_quantity}}
         )
 
-        return jsonify({"msg": "Product added to cart successfully!"}), 200
+        updated_user = get_user_by_ration_card_id(ration_card_id)
+        store = get_store_by_fps_id(user.fps_code)
+        return jsonify({"msg": "Product added to cart successfully!","user":updated_user.to_dict(),"store":store.to_dict()}), 200
+
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
+
+
+@main_bp.route('/add_order', methods=['POST'])
+@jwt_required()
+def add_order():
+    try:
+        current_user = get_jwt_identity()
+        ration_card_id = current_user["ration_card_id"]
+        
+        user = get_user_by_ration_card_id(ration_card_id)
+        fps_store = get_store_by_fps_id(user.fps_code)
+
+        total_cart_quantity = sum([item.quantity for item in user.cart])
+        total_capacity = user.total_monthly_quantity
+        
+        if user.current_quantity_consumed == 0 and total_cart_quantity > total_capacity:
+            return jsonify({"msg": "Total cart quantity exceeds your monthly capacity"}), 400
+        
+        order_id = "ORDER" + str(db.orders.count_documents({}) + 1).zfill(4)
+        order_type = request.json.get("order_type")
+        payment_method = request.json.get("payment_method")
+        payment_id = request.json.get("payment_id")
+        order_status = "Pending"
+        expected_fulfilment_date = fps_store.next_available_date
+        
+        new_order = Order(
+            order_id=order_id,
+            fps_id=user.fps_code,
+            ration_card_id=ration_card_id,
+            order_type=order_type,
+            expected_fulfilment_date=expected_fulfilment_date,
+            payment_method=payment_method,
+            payment_id=payment_id,
+            order_status=order_status,
+            products=user.cart
+        )
+        
+        user.current_quantity_consumed += total_cart_quantity
+
+        db.fps.find_one_and_update(
+            {"fps_id": user.fps_code},
+            {"$push": {"orders": new_order.to_dict()}}
+        )
+        
+        db.users.find_one_and_update(
+            {"ration_card_id": ration_card_id},
+            {"$set": {
+                "current_quantity_consumed": user.current_quantity_consumed,
+                "cart": []
+            }}
+        )
+
+        return jsonify({"msg": "Order placed successfully!"}), 200
 
     except Exception as e:
         return jsonify({"msg": str(e)}), 500

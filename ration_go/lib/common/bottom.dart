@@ -4,7 +4,10 @@ import 'package:ration_go/colors.dart';
 
 class bottomNavbar extends StatefulWidget {
   int currentIndex = 0;
-  bottomNavbar(this.currentIndex, {Key? key}) : super(key: key);
+  bottomNavbar(
+    this.currentIndex, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _BottomnavbarState createState() => _BottomnavbarState();
@@ -41,14 +44,14 @@ class _BottomnavbarState extends State<bottomNavbar> {
         ),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.assignment_outlined,
+              Icons.inventory_2,
             ),
-            label: 'Tests'),
+            label: 'Products'),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.pie_chart_outline_rounded,
+            Icons.history,
           ),
-          label: 'Reports',
+          label: 'History',
         ),
         BottomNavigationBarItem(
             icon: Icon(
