@@ -9,7 +9,7 @@ const ProductCard = ({ image, name, size, price }) => {
         <h3 className="text-lg font-semibold">{name}</h3>
         <p className="text-gray-500">{size}</p>
         <p className="text-gray-900 font-semibold mt-1">${price.toFixed(2)}</p>
-        <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        <button className="mt-4 bg-custom-purple 500 text-white py-2 px-4 rounded hover:bg-blue-600">
           Add to Cart
         </button>
       </div>
