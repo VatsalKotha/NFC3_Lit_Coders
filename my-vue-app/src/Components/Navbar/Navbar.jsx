@@ -17,7 +17,7 @@ const Sidebar = ({ onTabClick, activeTab }) => {
     { title: "Dashboard", icon: <FaClipboardList /> },
     { title: "All Orders", icon: <FaClipboardCheck /> },
     { title: "Orders Placed", icon: <FaCheck /> },
-    { title: "Orders Out For Pickup", icon: <FaTruck /> },
+    { title: "Manage / Inventory", icon: <FaTruck /> },
     { title: "Orders Received", icon: <FaBoxOpen /> },
     { title: "Orders Processing", icon: <FaCogs /> },
     { title: "Orders Processed", icon: <FaTshirt /> },
