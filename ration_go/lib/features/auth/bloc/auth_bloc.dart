@@ -63,13 +63,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.remove(
-            "access_token"); // Remove the access token from SharedPreferences
+        await prefs.remove("access_token");
 
-        emit(LogoutSuccess()); // Emit the logout success state
+        Get.offAllNamed('/');
+        emit(LogoutSuccess());
       } catch (e) {
-        emit(LoginFailure(
-            e.toString())); // Reuse the failure state for simplicity
+        emit(LoginFailure(e.toString()));
       }
     });
   }

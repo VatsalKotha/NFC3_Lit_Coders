@@ -64,7 +64,7 @@ class _BottomnavbarState extends State<bottomNavbar> {
           Get.offAllNamed('/home');
         }
         if (value == 1 && widget.currentIndex != 1) {
-          Get.offAllNamed('/health_test');
+          Get.offAllNamed('/product');
         }
         if (value == 2 && widget.currentIndex != 2) {
           Get.offAllNamed('/reports');

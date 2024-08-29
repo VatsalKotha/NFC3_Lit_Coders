@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
+import 'package:ration_go/features/auth/bloc/auth_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,9 +15,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> imageUrls = [
-    'https://via.placeholder.com/600x200',
-    'https://via.placeholder.com/600x200',
-    'https://via.placeholder.com/600x200',
+    'https://res.cloudinary.com/di9sgzulx/image/upload/v1724943264/phxu9orflcjb1oxkllvz.webp',
+    'https://res.cloudinary.com/di9sgzulx/image/upload/v1724943263/lw84urfcew9ophjbfpqo.jpg',
+    'https://res.cloudinary.com/di9sgzulx/image/upload/v1724943263/ypycgvm6kl5yemqiycqn.png',
   ];
 
   @override
@@ -72,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             const Text(
-                              '123, Main Street, City, State',
+                              'Andheri, Maharashtra',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -107,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 210, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 200, 10, 0),
                 child: CarouselSlider(
                   options: CarouselOptions(
                     height: 140,
@@ -134,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Row(
                       children: [
-                        Text('Explore Categories',
+                        Text('Explore Products',
                             style: TextStyle(
                                 fontSize: 18,
                                 color: AppColors.black,
@@ -142,13 +144,148 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 200,
+                      height: 180,
                       width: double.infinity,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              width: 160,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              width: 60,
+                                              height: 70,
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0, 10, 0, 0),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.secondary,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20)),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 10),
+                                            child: Image.network(
+                                              "https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png",
+                                              height: 80,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(8, 0, 8, 5),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.secondary,
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Rice',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: AppColors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            Text('₹20/kg',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    height: 0,
+                                                    color: Colors.grey.shade500,
+                                                    fontWeight:
+                                                        FontWeight.w400)),
+                                          ],
+                                        ),
+                                        Container(
+                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primary,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(Icons.remove,
+                                                  color: Colors.white,
+                                                  size: 20),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text("1",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16)),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Icon(Icons.add,
+                                                  color: Colors.white,
+                                                  size: 20),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    ),
+                    SizedBox(
+                      height: 180,
+                      width: double.infinity,
+                      child: PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                               padding:
                                   const EdgeInsets.fromLTRB(10, 10, 10, 10),
                               decoration: BoxDecoration(
@@ -164,38 +301,129 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 60,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Stack(
+                                    alignment: Alignment.bottomCenter,
                                     children: [
-                                      Text('Category Name',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.w500)),
-                                      const SizedBox(height: 5),
-                                      Text('Description',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: AppColors.grey,
-                                              fontWeight: FontWeight.w400)),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              width: 60,
+                                              height: 70,
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0, 10, 0, 0),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.secondary,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20),
+                                                    topRight:
+                                                        Radius.circular(20)),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 10),
+                                            child: Image.network(
+                                              "https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png",
+                                              height: 80,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(8, 0, 8, 5),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.secondary,
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Rice',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: AppColors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            Text('₹20/kg',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    height: 0,
+                                                    color: Colors.grey.shade500,
+                                                    fontWeight:
+                                                        FontWeight.w400)),
+                                          ],
+                                        ),
+                                        Container(
+                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primary,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(Icons.remove,
+                                                  color: Colors.white,
+                                                  size: 20),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text("1",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16)),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Icon(Icons.add,
+                                                  color: Colors.white,
+                                                  size: 20),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             );
                           }),
                     ),
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        return InkWell(
+                          onTap: () {
+                            context.read<AuthBloc>().add(LogoutEvent());
+                          },
+                          child: Container(
+                            child: Text('Logout'),
+                          ),
+                        );
+                      },
+                    )
                   ],
                 ),
               ),

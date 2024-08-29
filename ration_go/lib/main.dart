@@ -10,6 +10,8 @@ import 'package:ration_go/features/auth/ui/login_screen.dart';
 import 'package:ration_go/features/auth/ui/splash_screen.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart' as gt;
 import 'package:ration_go/features/home/ui/home_screen.dart';
+import 'package:ration_go/features/product/ui/bloc/product_bloc.dart';
+import 'package:ration_go/features/product/ui/product_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +26,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (BuildContext context) => AuthBloc(Dio()),
-        )
+        ),
+        BlocProvider(create: (BuildContext context) => ProductBloc()),
       ],
       child: GetMaterialApp(
           title: 'Flutter Demo',
@@ -50,6 +53,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/home',
               page: () => const HomeScreen(),
+              transition: gt.Transition.noTransition,
+            ),
+            GetPage(
+              name: '/product',
+              page: () => const ProductScreen(),
               transition: gt.Transition.noTransition,
             ),
           ]),
