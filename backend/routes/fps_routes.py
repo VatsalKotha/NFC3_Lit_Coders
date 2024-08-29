@@ -80,4 +80,3 @@ def get_global_products():
     
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
-

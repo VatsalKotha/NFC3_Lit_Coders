@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:ration_go/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,6 +12,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkLogin();
+  }
+
+  Future checkLogin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Future.delayed(Duration(seconds: 3), () {
+      if (prefs.getString("access_token") != null) {
+        Get.offAllNamed('/home');
+      } else {
+        Get.toNamed('/login');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

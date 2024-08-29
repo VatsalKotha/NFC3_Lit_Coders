@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:ration_go/colors.dart';
-import 'dart:async'; // Import for Timer
+import 'dart:async';
+
+import 'package:ration_go/features/auth/bloc/auth_bloc_bloc.dart'; // Import for Timer
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,22 +19,22 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController rationNumber = TextEditingController();
+  String otp = '';
   bool isOtpSent = false;
-  int _start = 60; // 1 minute
+  int _start = 30;
   Timer? _timer;
 
   @override
   void dispose() {
-    _timer
-        ?.cancel(); // Cancel the timer if it’s active when the widget is disposed
+    _timer?.cancel();
     super.dispose();
   }
 
   void startTimer() {
     setState(() {
-      _start = 60; // Reset the timer to 60 seconds
+      _start = 30;
     });
-    _timer?.cancel(); // Cancel any previous timer
+    _timer?.cancel();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_start == 0) {
         setState(() {
@@ -156,22 +162,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
                           child: OtpTextField(
-                            numberOfFields: 6,
-                            borderColor: AppColors.primary,
-                            showFieldAsBox: false,
-                            onCodeChanged: (String code) {},
-                            onSubmit: (String verificationCode) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Verification Code"),
-                                      content: Text(
-                                          'Code entered is $verificationCode'),
-                                    );
-                                  });
-                            },
-                          ),
+                              numberOfFields: 6,
+                              borderColor: AppColors.primary,
+                              showFieldAsBox: false,
+                              onCodeChanged: (String code) {
+                                otp = code;
+                              },
+                              onSubmit: (String verificationCode) {
+                                otp = verificationCode;
+
+                                context
+                                    .read<AuthBlocBloc>()
+                                    .add(LoginEvent(rationNumber.text, otp));
+                              }),
                         ),
                         SizedBox(
                           height: 10,
@@ -179,9 +182,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         InkWell(
                           onTap: _start == 0
                               ? () {
-                                  // Reset the timer and resend the OTP
                                   startTimer();
-                                  // Add logic to resend OTP here
+                                  context
+                                      .read<AuthBlocBloc>()
+                                      .add(SendOtpEvent(rationNumber.text));
                                 }
                               : null,
                           child: Text(
@@ -201,37 +205,53 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 20,
               ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    isOtpSent = true;
-                  });
-                  startTimer(); // Start the timer when OTP is sent
+              BlocBuilder<AuthBlocBloc, AuthBlocState>(
+                builder: (context, state) {
+                  return InkWell(
+                    onTap: () {
+                      startTimer();
+                      if (isOtpSent) {
+                        if (state is SendOtpSuccess) {
+                          context
+                              .read<AuthBlocBloc>()
+                              .add(LoginEvent(rationNumber.text, otp));
+                        }
+                      } else {
+                        context
+                            .read<AuthBlocBloc>()
+                            .add(SendOtpEvent(rationNumber.text));
+
+                        setState(() {
+                          isOtpSent = true;
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(18, 5, 18, 5),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                AppColors.primary,
+                                AppColors.primary.withAlpha(120),
+                              ]),
+                          color: AppColors.primary,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15))),
+                      child: const Center(
+                          child: Text(
+                        "Proceed",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      )),
+                    ),
+                  );
                 },
-                child: Container(
-                  height: 60,
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(18, 5, 18, 5),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            AppColors.primary,
-                            AppColors.primary.withAlpha(120),
-                          ]),
-                      color: AppColors.primary,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(15))),
-                  child: const Center(
-                      child: Text(
-                    "Proceed",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  )),
-                ),
               ),
             ],
           ),
