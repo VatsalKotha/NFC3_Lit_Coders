@@ -1,3 +1,66 @@
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// const CardContent = ({ cardTitle }) => {
+//   const [data, setData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         setLoading(true);
+//         const endpoint = getEndpointForCardTitle(cardTitle);
+        
+//         // Assuming the API might require some payload
+//         const payload = {}; // Customize this object as per the API's requirements
+        
+//         const response = await axios.post(endpoint, payload);
+//         setData(response.data);
+//       } catch (err) {
+//         setError(err.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchData();
+//   }, [cardTitle]);
+
+//   if (loading) return <div>Loading...</div>;
+//   if (error) return <div>Error: {error}</div>;
+
+//   return (
+//     <>
+//       <h2 className="text-xl font-bold mb-4">{cardTitle}</h2>
+//       <div className="p-6 bg-white shadow-lg rounded-lg grid grid-cols-3 gap-6">
+//         {/* Render your data here */}
+//         {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+//       </div>
+//     </>
+//   );
+// };
+
+// const getEndpointForCardTitle = (title) => {
+//   const baseUrl = "https://nfc3-lit-coders-i8r5.onrender.com/fps/orders/";
+
+//   const endpoints = {
+//     "All Orders": "all",
+//     "Orders Placed": "placed",
+//     "Orders Out For Pickup": "out-for-pickup",
+//     "Orders Received": "received",
+//     "Orders Processing": "processing",
+//     "Orders Processed": "processed",
+//     "Orders Out For Delivery": "out-for-delivery",
+//     "Orders Delivered": "delivered",
+//     "Orders Cancelled": "cancelled",
+//   };
+
+//   return `${baseUrl}${endpoints[title] || "all"}`;
+// };
+
+// export default CardContent;
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -11,7 +74,12 @@ const CardContent = ({ cardTitle }) => {
       try {
         setLoading(true);
         const endpoint = getEndpointForCardTitle(cardTitle);
-        const response = await axios.get(endpoint);
+        const response = await axios.post(endpoint, {}, {
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyNDk1MTg5MywianRpIjoiZjU2NTY5OWYtNTJlMS00MmQ1LTg4ZjUtMDQ3MWYwNjNhNjg2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJmcHNfaWQiOiJGUFMwMDIifSwibmJmIjoxNzI0OTUxODkzLCJleHAiOjE3MjUwMzgyOTN9.IT7lXkLkdYlSqBf3gIgMHoihDRC3ErduCtwUTk_evKc', // Replace with your token
+            'Content-Type': 'application/json'
+          }
+        });
         setData(response.data);
       } catch (err) {
         setError(err.message);
@@ -24,28 +92,30 @@ const CardContent = ({ cardTitle }) => {
   }, [cardTitle]);
 
   const getEndpointForCardTitle = (title) => {
-    const endpoints = {
-      "All Orders": "/api/orders/all",
-      "Orders Placed": "/api/orders/placed",
-      "Orders Out For Pickup": "/api/orders/out-for-pickup",
-      "Orders Received": "/api/orders/received",
-      "Orders Processing": "/api/orders/processing",
-      "Orders Processed": "/api/orders/processed",
-      "Orders Out For Delivery": "/api/orders/out-for-delivery",
-      "Orders Delivered": "/api/orders/delivered",
-      "Orders Cancelled": "/api/orders/cancelled",
-    };
-    return endpoints[title] || "/api/orders/all";
+    const baseURL = "https://nfc3-lit-coders-i8r5.onrender.com/fps/get_store_orders";
+    return baseURL;
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: </div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
       <h2 className="text-xl font-bold mb-4">{cardTitle}</h2>
       <div className="p-6 bg-white shadow-lg rounded-lg grid grid-cols-3 gap-6">
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+        {data && data.orders.length > 0 ? (
+          data.orders.map((order) => (
+            <div key={order.order_id} className="p-4 border border-gray-200 rounded-lg">
+              <h3 className="text-lg font-semibold">{order.order_id}</h3>
+              <p>Status: {order.order_status}</p>
+              <p>Expected Fulfilment Date: {order.expected_fulfilment_date}</p>
+              <p>Payment Method: {order.payment_method}</p>
+              {/* Render more details as needed */}
+            </div>
+          ))
+        ) : (
+          <p>No orders available</p>
+        )}
       </div>
     </>
   );
