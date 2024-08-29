@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import OTP from "./pages/OTP"
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
+    <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/otp" element={<OTP />} />
       </Routes>
-    </>
+    </Router>
   );
 }
 
