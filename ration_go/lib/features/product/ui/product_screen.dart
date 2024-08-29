@@ -154,7 +154,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                               color: AppColors.black)),
-                      if (state.user['has_lpg'])
+                      if (true)
                         SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(

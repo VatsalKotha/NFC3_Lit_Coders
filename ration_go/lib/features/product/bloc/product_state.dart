@@ -144,6 +144,11 @@ class _ProductStateState extends State<Product> {
                             ? InkWell(
                                 onTap: () => setState(() {
                                       widget.cart++;
+                                      context.read<ProductBloc>().add(AddToCart(
+                                          widget.product_id,
+                                          widget.cart,
+                                          widget.price,
+                                          context));
                                     }),
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,6 +165,12 @@ class _ProductStateState extends State<Product> {
                                   InkWell(
                                       onTap: () => setState(() {
                                             widget.cart--;
+                                            context.read<ProductBloc>().add(
+                                                AddToCart(
+                                                    widget.product_id,
+                                                    widget.cart,
+                                                    widget.price,
+                                                    context));
                                           }),
                                       child: const Icon(Icons.remove,
                                           color: Colors.white, size: 20)),
@@ -169,6 +180,12 @@ class _ProductStateState extends State<Product> {
                                   InkWell(
                                       onTap: () => setState(() {
                                             widget.cart++;
+                                            context.read<ProductBloc>().add(
+                                                AddToCart(
+                                                    widget.product_id,
+                                                    widget.cart,
+                                                    widget.price,
+                                                    context));
                                           }),
                                       child: const Icon(Icons.add,
                                           color: Colors.white, size: 20)),

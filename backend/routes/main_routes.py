@@ -44,10 +44,14 @@ def get_store_products():
                 else:
                     price = fps_product.base_cost_bpl
 
+                # Initialize cart_quantity to 0
                 cart_quantity = 0
-                if fps_product.product_id in user.cart:
-                    cart_quantity = user.cart[fps_product.product_id].quantity
+                cart = user.to_dict()["cart"]
 
+                for x in cart:
+                    if x["product_id"] == fps_product.product_id:
+                        cart_quantity = x["quantity"]
+                        break
                     
                 detailed_product = {
                     "product_id": fps_product.product_id,

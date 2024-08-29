@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:ration_go/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,6 +46,37 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           ));
         } else {
           emit(ProductFailure('Failed to send OTP'));
+        }
+      } catch (e) {
+        emit(ProductFailure(e.toString()));
+      }
+    });
+
+    on<AddToCart>((event, emit) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      try {
+        final response =
+            await _dio.post('${ServerConstants.server_url}/add_to_cart',
+                data: {
+                  "product_id": event.productId,
+                  "quantity": event.quantity,
+                  "actual_price": event.actual_price
+                },
+                options: Options(headers: {
+                  "Authorization": "Bearer ${prefs.getString("access_token")}",
+                }));
+
+        if (response.statusCode == 200) {
+          GetProducts();
+          ScaffoldMessenger.of(event.context).showSnackBar(
+            SnackBar(
+              content: Text(response.data["msg"]),
+              backgroundColor: AppColors.primary,
+            ),
+          );
+        } else {
+          emit(ProductFailure('Failed to update cart'));
         }
       } catch (e) {
         emit(ProductFailure(e.toString()));
