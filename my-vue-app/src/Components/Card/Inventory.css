@@ -1,0 +1,19 @@
+.inventory-container {
+    padding: 20px;
+  }
+  
+  .product-cards-container {
+    display: flex;
+    gap: 16px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  
+  .product-card {
+    min-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

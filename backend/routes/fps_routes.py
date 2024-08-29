@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.globalproduct_model import GlobalProduct
@@ -22,7 +23,7 @@ def add_or_update_product():
 
         data = request.get_json()         
         new_product = Product.from_dict(data)  
-        
+
         global_product = db.products.find_one({'product_id':new_product.product_id})
         new_product.product_name = global_product['product_name']
 
@@ -47,6 +48,7 @@ def add_or_update_product():
 @fps_bp.route('/get_global_products', methods=['POST'])
 @jwt_required()
 def get_global_products():
+    
     try:
         current_user = get_jwt_identity()
         fps_id = current_user["fps_id"]
@@ -83,3 +85,56 @@ def get_global_products():
     
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+
+
+@fps_bp.route('/get_store_orders', methods=['POST'])
+@jwt_required()
+def get_store_orders():
+    try:
+        current_user = get_jwt_identity()
+        fps_id = current_user["fps_id"]
+        
+        fps_store = get_store_by_fps_id(fps_id)
+        orders_with_user_details = []
+
+        for order in fps_store.orders:
+            user = get_user_by_ration_card_id(order.ration_card_id)
+            order_dict = order.to_dict()
+            order_dict['user'] = user.to_dict()  # Appending user details
+            orders_with_user_details.append(order_dict)
+        
+        return jsonify({"orders": orders_with_user_details}), 200
+    
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
+@fps_bp.route('/update_order', methods=['POST'])
+@jwt_required()
+def update_order():
+    try:
+        data = request.get_json()
+        order_id = data.get("order_id")
+        
+        current_user = get_jwt_identity()
+        fps_id = current_user["fps_id"]
+        fps_store = get_store_by_fps_id(fps_id)
+
+        order = next((o for o in fps_store.orders if o.order_id == order_id), None)
+
+        if not order:
+            return jsonify({"msg": "Order not found"}), 404
+
+        if "order_status" in data:
+            order.order_status = data["order_status"]
+            db.fps.find_one_and_update(
+            {"fps_id": fps_id, "orders.order_id": order_id},
+            {"$set": {
+                "orders.$.order_status": order.order_status,
+            }}
+        )
+#
+        return jsonify({"msg": "Order updated successfully", "order": order.to_dict()}), 200
+
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+

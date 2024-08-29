@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:ration_go/colors.dart';
 import 'dart:async';
 
-import 'package:ration_go/features/auth/bloc/auth_bloc_bloc.dart'; // Import for Timer
+import 'package:ration_go/features/auth/bloc/auth_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController rationNumber = TextEditingController();
-  String otp = '';
+  String otp = "";
   bool isOtpSent = false;
   int _start = 30;
   Timer? _timer;
@@ -162,19 +159,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
                           child: OtpTextField(
-                              numberOfFields: 6,
-                              borderColor: AppColors.primary,
-                              showFieldAsBox: false,
-                              onCodeChanged: (String code) {
-                                otp = code;
-                              },
-                              onSubmit: (String verificationCode) {
-                                otp = verificationCode;
-
-                                context
-                                    .read<AuthBlocBloc>()
-                                    .add(LoginEvent(rationNumber.text, otp));
-                              }),
+                            numberOfFields: 6,
+                            borderColor: AppColors.primary,
+                            showFieldAsBox: false,
+                            onCodeChanged: (String code) {
+                              otp = code;
+                            },
+                            onSubmit: (String verificationCode) {
+                              otp = verificationCode;
+                              context
+                                  .read<AuthBloc>()
+                                  .add(LoginEvent(rationNumber.text, otp));
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
@@ -184,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ? () {
                                   startTimer();
                                   context
-                                      .read<AuthBlocBloc>()
+                                      .read<AuthBloc>()
                                       .add(SendOtpEvent(rationNumber.text));
                                 }
                               : null,
@@ -205,25 +202,23 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 20,
               ),
-              BlocBuilder<AuthBlocBloc, AuthBlocState>(
+              BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   return InkWell(
                     onTap: () {
+                      setState(() {
+                        isOtpSent = true;
+                      });
                       startTimer();
-                      if (isOtpSent) {
-                        if (state is SendOtpSuccess) {
-                          context
-                              .read<AuthBlocBloc>()
-                              .add(LoginEvent(rationNumber.text, otp));
-                        }
-                      } else {
+                      if (!isOtpSent) {
                         context
-                            .read<AuthBlocBloc>()
+                            .read<AuthBloc>()
                             .add(SendOtpEvent(rationNumber.text));
-
-                        setState(() {
-                          isOtpSent = true;
-                        });
+                      }
+                      if (state is SendOtpSuccess) {
+                        context
+                            .read<AuthBloc>()
+                            .add(LoginEvent(rationNumber.text, otp));
                       }
                     },
                     child: Container(

@@ -1,16 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
-import 'package:ration_go/common/constants.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:meta/meta.dart';
+import 'package:ration_go/common/server.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'auth_bloc_event.dart';
-part 'auth_bloc_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
-class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final Dio _dio;
-
-  AuthBlocBloc(this._dio) : super(AuthBlocInitial()) {
+  AuthBloc(this._dio) : super(AuthInitial()) {
     on<SendOtpEvent>((event, emit) async {
       emit(AuthLoading());
       try {
@@ -64,6 +65,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.remove("access_token");
 
+        Get.offAllNamed('/');
         emit(LogoutSuccess());
       } catch (e) {
         emit(LoginFailure(e.toString()));

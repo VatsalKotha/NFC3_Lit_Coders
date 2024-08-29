@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaClipboardList, FaTruck, FaCheck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaClipboardCheck, FaTimesCircle } from 'react-icons/fa';
+import { FaClipboardList, FaTruck, FaCheck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaClipboardCheck, FaTimesCircle, FaSignOutAlt } from 'react-icons/fa';
 
 const Sidebar = ({ onTabClick, activeTab }) => {
   const tabs = [
