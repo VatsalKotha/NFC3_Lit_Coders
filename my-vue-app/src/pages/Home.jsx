@@ -37,23 +37,20 @@
 // };
 
 // export default Home;
+// src/Pages/Home.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Sidebar from '../Components/Navbar/Navbar';
 import Card from '../Components/Card/CategoryCard';
 import CardContent from '../Components/CardContent';
-import { FaClipboardCheck, FaCheck, FaTruck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaTimesCircle } from 'react-icons/fa';
+import Inventory from '../pages/Inventory';
+import Chat from '../pages/Chat';
+import { FaClipboardCheck, FaCheck, FaTruck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaTimesCircle, FaCommentDots } from 'react-icons/fa';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
-  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleTabClick = (title) => {
-    if (title === "Manage / Inventory") {
-      navigate("/inventory"); // Navigate to the Inventory page
-    } else {
-      setActiveTab(title); // Set active tab for other card clicks
-    }
+    setActiveTab(title);
   };
 
   return (
@@ -61,9 +58,7 @@ const Home = () => {
       <Sidebar onTabClick={handleTabClick} activeTab={activeTab} />
       <div className="flex-1 p-10 bg-gray-100">
         <h1 className="text-2xl font-bold mb-6">Welcome to RationGo!</h1>
-        {activeTab !== "Dashboard" ? (
-          <CardContent cardTitle={activeTab} />  
-        ) : (
+        {activeTab === "Dashboard" && (
           <div className="grid grid-cols-3 gap-6">
             <Card title="All Orders" description="Manage all of your orders" icon={<FaClipboardCheck />} onClick={() => handleTabClick("All Orders")} />
             <Card title="Orders Placed" description="Manage all currently placed orders" icon={<FaCheck />} onClick={() => handleTabClick("Orders Placed")} />
@@ -74,7 +69,13 @@ const Home = () => {
             <Card title="Orders Out For Delivery" description="Manage all currently out for delivery orders" icon={<FaShippingFast />} onClick={() => handleTabClick("Orders Out For Delivery")} />
             <Card title="Orders Delivered" description="Manage all delivered orders" icon={<FaCheck />} onClick={() => handleTabClick("Orders Delivered")} />
             <Card title="Orders Cancelled" description="Manage all cancelled orders" icon={<FaTimesCircle />} onClick={() => handleTabClick("Orders Cancelled")} />
+            <Card title="Chat Support" description="Get help from customer support" icon={<FaCommentDots />} onClick={() => handleTabClick("Chat Support")} />
           </div>
+        )}
+        {activeTab === "Manage / Inventory" && <Inventory />}
+        {activeTab === "Chat Support" && <Chat />}
+        {activeTab !== "Dashboard" && activeTab !== "Manage / Inventory" && activeTab !== "Chat Support" && (
+          <CardContent cardTitle={activeTab} />
         )}
       </div>
     </div>
