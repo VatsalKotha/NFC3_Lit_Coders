@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginimage from "../assets/login.jpg";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [fpsId, setFpsId] = useState("");
@@ -15,17 +17,19 @@ const Login = () => {
         fps_id: fpsId,
       });
 
-      if (response.status == 200) {
-        navigate("/otp");
-      } else {
-        console.error("Error:", data.msg);
-      }
+      if (response.status === 200) {
+        toast.success("OTP sent successfully! Please check your email.", { autoClose: 3000 });
+        navigate("/otp", { state: { fpsId } });
+      } 
     } catch (error) {
+      toast.error("FPS Id doesnt exist.", { autoClose: 3000 });
       console.error("Network error:", error);
     }
   };
+
   return (
     <div className="flex h-screen">
+      <ToastContainer /> 
       <div className="absolute p-4 bg-[#613CB1] text-white text-3xl font-bold rounded-lg m-5">
         RationGo!
       </div>
