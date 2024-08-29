@@ -3,8 +3,11 @@ from settings.security import init_jwt
 from routes.auth_routes import auth_bp
 from routes.main_routes import main_bp
 from routes.fps_routes import fps_bp
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app) 
 init_jwt(app)
 
 app.register_blueprint(auth_bp, url_prefix="/auth")
