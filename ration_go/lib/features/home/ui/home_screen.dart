@@ -2,12 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-
+import 'package:get/get_navigation/src/routes/transitions_type.dart' as Tr;
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
 import 'package:ration_go/features/auth/bloc/auth_bloc.dart';
 import 'package:ration_go/features/home/ui/bottomsheet.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
+import 'package:ration_go/features/product/ui/product_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -84,9 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.location_on,
-                                        color: Colors.white, size: 20),
-                                    const SizedBox(width: 4),
+                                    // Icon(Icons.location_on,
+                                    //     color: Colors.white, size: 20),
+                                    // const SizedBox(width: 4),
                                     Text(
                                       order_type,
                                       style: TextStyle(
@@ -121,13 +122,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 5),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                               child: TextField(
+                                onSubmitted: (value) {
+                                  Get.offAll(
+                                      () => ProductScreen(
+                                            searchQuery: value,
+                                          ),
+                                      transition: Tr.Transition.noTransition);
+                                },
                                 decoration: InputDecoration(
                                   hintText: 'Search for products...',
                                   border: InputBorder.none,
@@ -143,489 +151,193 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 140,
-                            autoPlay: true,
-                            aspectRatio: 16 / 9,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.9,
-                          ),
-                          items: imageUrls.map((url) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Image.network(
-                                url,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                        child: Column(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Explore Categories",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.black)),
+                        const SizedBox(height: 10),
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Text('Explore Products',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w500)),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 180,
-                              width: double.infinity,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        0, 10, 10, 10),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 10, 10, 10),
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 1,
-                                          blurRadius: 5,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => Get.toNamed('/product'),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
                                       children: [
-                                        Stack(
-                                          alignment: Alignment.bottomCenter,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    width: 60,
-                                                    height: 70,
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 0),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.secondary,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(20),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 10),
-                                                  child: Image.network(
-                                                    "https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png",
-                                                    height: 80,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                        CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: AppColors.secondary,
                                         ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(8, 0, 8, 5),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.secondary,
-                                              borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10))),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Rice',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          color:
-                                                              AppColors.black,
-                                                          fontWeight:
-                                                              FontWeight.w500)),
-                                                  Text('₹20/kg',
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          height: 0,
-                                                          color: Colors
-                                                              .grey.shade500,
-                                                          fontWeight:
-                                                              FontWeight.w400)),
-                                                ],
-                                              ),
-                                              Container(
-                                                height: 30,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.primary,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Icon(Icons.remove,
-                                                        color: Colors.white,
-                                                        size: 20),
-                                                    SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Text("1",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16)),
-                                                    SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Icon(Icons.add,
-                                                        color: Colors.white,
-                                                        size: 20),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                        Image.network(
+                                          'https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png',
+                                          height: 55,
+                                          fit: BoxFit.fitHeight,
+                                        )
                                       ],
                                     ),
-                                  );
-                                },
+                                    SizedBox(height: 5),
+                                    Text("Food\nGrains",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            height: 1,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black)),
+                                  ],
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              height: 180,
-                              width: double.infinity,
-                              child: PageView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        0, 10, 10, 10),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 10, 10, 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 1,
-                                          blurRadius: 5,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => Get.toNamed('/product'),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
                                       children: [
-                                        Stack(
-                                          alignment: Alignment.bottomCenter,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    width: 60,
-                                                    height: 70,
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 0),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.secondary,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(20),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 10),
-                                                  child: Image.network(
-                                                    "https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png",
-                                                    height: 80,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                        CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: AppColors.secondary,
                                         ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(8, 0, 8, 5),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.secondary,
-                                              borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10))),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Wheat',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          color:
-                                                              AppColors.black,
-                                                          fontWeight:
-                                                              FontWeight.w500)),
-                                                  Text('₹25/kg',
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          height: 0,
-                                                          color: Colors
-                                                              .grey.shade500,
-                                                          fontWeight:
-                                                              FontWeight.w400)),
-                                                ],
-                                              ),
-                                              Container(
-                                                height: 30,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.primary,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Icon(Icons.remove,
-                                                        color: Colors.white,
-                                                        size: 20),
-                                                    SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Text("2",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16)),
-                                                    SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Icon(Icons.add,
-                                                        color: Colors.white,
-                                                        size: 20),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                        Image.network(
+                                          'https://res.cloudinary.com/di9sgzulx/image/upload/v1724962521/oahfrqwlsjidkoa2jcy9.webp',
+                                          height: 70,
+                                          fit: BoxFit.fitHeight,
+                                        )
                                       ],
                                     ),
-                                  );
-                                },
+                                    SizedBox(height: 5),
+                                    Text("Cooking\nEssentials",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            height: 1,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black)),
+                                  ],
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              height: 180,
-                              width: double.infinity,
-                              child: PageView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        0, 10, 10, 10),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 10, 10, 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 1,
-                                          blurRadius: 5,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => Get.toNamed('/product'),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
                                       children: [
-                                        Stack(
-                                          alignment: Alignment.bottomCenter,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    width: 60,
-                                                    height: 70,
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 0),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.secondary,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(20),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 10),
-                                                  child: Image.network(
-                                                    "https://res.cloudinary.com/di9sgzulx/image/upload/v1724942290/ztcyjvoecnrgtc76ha6m.png",
-                                                    height: 80,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                        CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: AppColors.secondary,
                                         ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(8, 0, 8, 5),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.secondary,
-                                              borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10))),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Sugar',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          color:
-                                                              AppColors.black,
-                                                          fontWeight:
-                                                              FontWeight.w500)),
-                                                  Text('₹30/kg',
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          height: 0,
-                                                          color: Colors
-                                                              .grey.shade500,
-                                                          fontWeight:
-                                                              FontWeight.w400)),
-                                                ],
-                                              ),
-                                              Container(
-                                                height: 30,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.primary,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Icon(Icons.remove,
-                                                        color: Colors.white,
-                                                        size: 20),
-                                                    SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Text("1",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16)),
-                                                    SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Icon(Icons.add,
-                                                        color: Colors.white,
-                                                        size: 20),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                        Image.network(
+                                          'https://res.cloudinary.com/di9sgzulx/image/upload/v1724962521/driv3jst4clkq4veehx5.png',
+                                          height: 60,
+                                          fit: BoxFit.fitHeight,
+                                        )
                                       ],
                                     ),
-                                  );
-                                },
+                                    SizedBox(height: 5),
+                                    Text("Pulses\n& Spices",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            height: 1,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black)),
+                                  ],
+                                ),
                               ),
                             ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => Get.toNamed('/product'),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: AppColors.secondary,
+                                        ),
+                                        Image.network(
+                                          'https://res.cloudinary.com/di9sgzulx/image/upload/v1724962520/dk0u3pusvkhljvlogfku.png',
+                                          height: 60,
+                                          fit: BoxFit.fitHeight,
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text("Fuel\n& Gas",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            height: 1,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black)),
+                                  ],
+                                ),
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        Divider(color: Colors.grey.shade300),
+                        //
+
+                        const Text("Explore Products",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.black)),
+                        SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: state.products,
+                            )),
+                        Divider(color: Colors.grey.shade300),
+                        //
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 160,
+                              autoPlay: true,
+                              aspectRatio: 16 / 9,
+                              enlargeCenterPage: true,
+                              viewportFraction: 1,
+                            ),
+                            items: imageUrls.map((url) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.network(
+                                  url,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

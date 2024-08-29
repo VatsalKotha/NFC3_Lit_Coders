@@ -5,7 +5,8 @@ import 'package:ration_go/common/bottom.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+  var searchQuery;
+  ProductScreen({this.searchQuery, super.key});
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
@@ -18,7 +19,10 @@ class _ProductScreenState extends State<ProductScreen> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    context.read<ProductBloc>().add(GetProducts());
+    if (widget.searchQuery != null) {
+      searchController.text = widget.searchQuery;
+    }
+    //context.read<ProductBloc>().add(GetProducts());
   }
 
   @override

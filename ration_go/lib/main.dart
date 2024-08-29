@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/product',
-              page: () => const ProductScreen(),
+              page: () => ProductScreen(),
               transition: gt.Transition.noTransition,
             ),
           ]),
