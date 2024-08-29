@@ -1,0 +1,166 @@
+/* Navbar.css */
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #613CB1; /* Example color */
+  color: white;
+  position: relative; /* For positioning mobile menu */
+}
+
+.navbar-options {
+  display: flex;
+}
+
+.toggle-btn {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  background: white;
+  color: #ff4d4d; /* Toggle button text color */
+}
+
+.toggle-btn.active {
+  background: #ff4d4d; /* Active button background */
+  color: white;
+}
+
+.navbar-delivery {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-right: auto;
+}
+
+.delivery-input,
+.address-input {
+  margin-right: 1rem;
+}
+
+.location-input,
+.address-input-field {
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  width: 100%;
+  background: #f0f0f0; /* Light background for inputs */
+  border-radius: 20px;
+  color: black; /* Input text color */
+}
+
+.navbar-pickup {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #ff4d4d; /* Text color for pickup details */
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin-left: auto;
+  margin-right: 2rem;
+  transition: all 0.3s ease;
+}
+
+.navbar-links ul {
+  display: flex;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 1rem;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #f0f0f0; /* Slight hover effect */
+}
+
+.navbar-actions .login-btn,
+.navbar-actions .signup-btn {
+  background: transparent;
+  border: 2px solid white;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.navbar-actions .login-btn:hover {
+  background: #ffb3b3; /* Light variation of the primary color */
+}
+
+.navbar-actions .signup-btn {
+  background: white;
+  color: #ff4d4d; /* Inverting colors for the sign-up button */
+}
+
+.navbar-actions .signup-btn:hover {
+  background: #ffcccc; /* Slight hover effect */
+}
+
+.mobile-menu-toggle {
+  display: none; /* Hidden by default */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-links {
+    display: none; /* Hide on small screens */
+    flex-direction: column; /* Stack vertically on small screens */
+    background-color: #613CB1; /* Match navbar color */
+    position: absolute; /* Overlay below the navbar */
+    top: 60px; /* Adjust based on navbar height */
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-links.active {
+    display: flex; /* Show when active */
+  }
+
+  .navbar-links ul {
+    flex-direction: column; /* Stack items vertically */
+  }
+
+  .mobile-menu-toggle {
+    display: block; /* Show hamburger on mobile */
+  }
+
+  .navbar-options,
+  .navbar-actions {
+    flex: 1 1 100%; /* Take full width */
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,63 @@
+/* CategoryCard.css */
+.category-card {
+    width: 300px; /* Adjust the width as needed */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: white;
+    margin: 1rem;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .category-card-image {
+    width: 100%;
+    height: 180px; /* Adjust height as needed */
+    object-fit: cover;
+  }
+  
+  .category-card-content {
+    padding: 1rem;
+  }
+  
+  .category-card-title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333; /* Adjust text color */
+  }
+  
+  .category-card-description {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: #777; /* Adjust description text color */
+  }
+  /* App.css or relevant stylesheet */
+.category-cards-container {
+  display: flex; /* Enables flexbox */
+  flex-wrap: wrap; /* Allows wrapping if there are many cards */
+  justify-content: center; /* Centers cards horizontally */
+  align-items: center; /* Centers cards vertically */
+  gap: 1rem; /* Adds space between cards */
+  padding: 2rem; /* Adds padding around the container */
+}
+
+.category-card {
+  width: 250px; /* Set a fixed width for consistency */
+  border: 1px solid #ddd; /* Optional: Adds a border */
+  border-radius: 8px; /* Optional: Adds rounded corners */
+  overflow: hidden; /* Optional: Hides overflow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow */
+  text-align: center; /* Centers text inside the card */
+  background-color: #fff; /* Card background color */
+}
+
+/* Optional: Adjust image styling within cards */
+.category-card-image {
+  width: 100%; /* Ensures image fills the width of the card */
+  height: 150px; /* Set a fixed height for the images */
+  object-fit: cover; /* Ensures image aspect ratio is maintained */
+}
