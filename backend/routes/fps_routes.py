@@ -48,10 +48,8 @@ def get_global_products():
         current_user = get_jwt_identity()
         fps_id = current_user["fps_id"]
         
-        # Fetch the FPS store using the fps_id from the current user
         fps_store = get_store_by_fps_id(fps_id)
         
-        # Convert FPS store products to a dictionary with product_id as the key
         fps_products_dict = {prod.product_id: prod for prod in fps_store.products}
         
         products = db.products.find()
