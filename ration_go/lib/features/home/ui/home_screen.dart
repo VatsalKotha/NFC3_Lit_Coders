@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
-import 'package:ration_go/features/auth/bloc/auth_bloc_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> imageUrls = [
-    'https://via.placeholder.com/600x200', // Replace with your image URLs
+    'https://via.placeholder.com/600x200',
     'https://via.placeholder.com/600x200',
     'https://via.placeholder.com/600x200',
   ];
@@ -208,20 +206,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold();
-//   }
-// }
