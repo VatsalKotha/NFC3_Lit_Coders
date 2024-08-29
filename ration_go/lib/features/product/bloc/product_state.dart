@@ -21,10 +21,11 @@ final class ProductFailure extends ProductState {
 
 final class ProductSuccess extends ProductState {
   List<Product> products;
+  List<ProductCart> cart_products;
   var user;
   var fps_store;
 
-  ProductSuccess(this.products, this.user, this.fps_store);
+  ProductSuccess(this.products, this.cart_products, this.user, this.fps_store);
 }
 
 class Product extends StatefulWidget {
@@ -197,6 +198,152 @@ class _ProductStateState extends State<Product> {
                   ],
                 )
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductCart extends StatefulWidget {
+  int quantity;
+  double actual_price;
+  String product_name;
+  String product_id;
+
+  ProductCart(
+      {this.quantity = 0,
+      this.actual_price = 0.0,
+      this.product_name = '',
+      this.product_id = '',
+      Key? key});
+
+  @override
+  _ProductCart createState() => _ProductCart();
+}
+
+class _ProductCart extends State<ProductCart> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.product_name,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              color: AppColors.black,
+                              fontWeight: FontWeight.w500)),
+                      Text(
+                          '₹' +
+                              widget.actual_price.toString() +
+                              " * " +
+                              widget.quantity.toString(),
+                          style: TextStyle(
+                              fontSize: 14,
+                              height: 0,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w400)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text('₹' + (widget.actual_price * widget.quantity).toString(),
+              style: TextStyle(
+                  fontSize: 16,
+                  height: 0,
+                  color: Colors.grey.shade900,
+                  fontWeight: FontWeight.w400)),
+          Expanded(
+            child: Container(
+              height: 30,
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: widget.quantity == 0
+                  ? InkWell(
+                      onTap: () => setState(() {
+                            widget.quantity++;
+                            context.read<ProductBloc>().add(AddToCart(
+                                widget.product_id,
+                                widget.quantity,
+                                widget.actual_price,
+                                context));
+                          }),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Add to Cart',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14)),
+                        ],
+                      ))
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                            onTap: () => setState(() {
+                                  widget.quantity--;
+                                  context.read<ProductBloc>().add(AddToCart(
+                                      widget.product_id,
+                                      widget.quantity,
+                                      widget.actual_price,
+                                      context));
+
+                                  if (widget.quantity == 0) {
+                                    context
+                                        .read<ProductBloc>()
+                                        .add(GetProducts());
+                                  }
+                                }),
+                            child: const Icon(Icons.remove,
+                                color: Colors.white, size: 20)),
+                        Text(widget.quantity.toString(),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16)),
+                        InkWell(
+                            onTap: () => setState(() {
+                                  widget.quantity++;
+                                  context.read<ProductBloc>().add(AddToCart(
+                                      widget.product_id,
+                                      widget.quantity,
+                                      widget.actual_price,
+                                      context));
+                                  context
+                                      .read<ProductBloc>()
+                                      .add(GetProducts());
+                                }),
+                            child: const Icon(Icons.add,
+                                color: Colors.white, size: 20)),
+                      ],
+                    ),
             ),
           ),
         ],

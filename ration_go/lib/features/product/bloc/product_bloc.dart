@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:meta/meta.dart';
 import 'package:ration_go/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,8 +40,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
               product_size: product['product_size'],
             ));
           }
+
+          List<ProductCart> cart = [];
+
+          for (var product in response.data['user']['cart']) {
+            cart.add(ProductCart(
+              product_id: product['product_id'],
+              quantity: product['quantity'],
+              actual_price: double.parse(product['actual_price'].toString()),
+              product_name: product['product_name'],
+            ));
+          }
           emit(ProductSuccess(
             products,
+            cart,
             response.data['user'],
             response.data['fps_store'],
           ));
@@ -49,6 +62,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         }
       } catch (e) {
         emit(ProductFailure(e.toString()));
+        print(e);
       }
     });
 

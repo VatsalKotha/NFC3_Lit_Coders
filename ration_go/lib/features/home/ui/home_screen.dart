@@ -44,6 +44,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            AppColors.primary,
+            AppColors.primary,
+          ]),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: () {
+            Get.toNamed('/cart');
+          },
+          icon: Icon(Icons.shopping_cart, color: Colors.white),
+        ),
+      ),
       backgroundColor: Colors.white,
       bottomNavigationBar: bottomNavbar(0),
       body: BlocBuilder<ProductBloc, ProductState>(

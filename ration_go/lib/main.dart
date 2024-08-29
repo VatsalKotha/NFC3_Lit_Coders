@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:ration_go/cart/cart.dart';
 import 'package:ration_go/features/auth/bloc/auth_bloc.dart';
 import 'package:ration_go/features/auth/ui/login_screen.dart';
 import 'package:ration_go/features/auth/ui/splash_screen.dart';
@@ -58,6 +59,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/product',
               page: () => ProductScreen(),
+              transition: gt.Transition.noTransition,
+            ),
+            GetPage(
+              name: '/cart',
+              page: () => Cart(),
               transition: gt.Transition.noTransition,
             ),
           ]),
