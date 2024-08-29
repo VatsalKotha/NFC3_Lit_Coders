@@ -1,25 +1,50 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import otpimage from "../assets/otp.jpg";
 import OTPInput from "otp-input-react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const OTP = () => {
-  const [email, setEmail] = useState("");
-  const [OTP, setOTP] = useState("");
+  const [otp, setOTP] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const { fpsId } = location.state || {};  
 
-  const handleEmailChange = () => navigate("/");
+  const handleidChange = () => navigate("/");
+
   const handleResendEmail = () => {
     console.log("Resend verification email to:", email);
+    toast.info("Verification email resent!", { autoClose: 3000 });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("OTP submitted:", OTP);
+    try {
+      const response = await axios.post(
+        "https://nfc3-lit-coders-i8r5.onrender.com/auth/login_fps",
+        {
+          fps_id: fpsId,
+          otp: otp,
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("OTP verified successfully!", { autoClose: 3000 });
+        navigate("/home"); 
+      } else {
+        toast.error("Incorrect OTP. Please try again.", { autoClose: 3000 });
+      }
+    } catch (error) {
+      toast.error("Network error. Please try again later.", { autoClose: 3000 });
+      console.error("Error:", error);
+    }
   };
 
   return (
     <div className="flex h-screen">
+      <ToastContainer /> 
       <div className="absolute p-4 bg-[#613CB1] text-white text-3xl font-bold rounded-lg m-5">
         RationGo!
       </div>
@@ -43,7 +68,7 @@ const OTP = () => {
         <form className="w-full max-w-sm" onSubmit={handleSubmit}>
           <div className="mb-6 bg-gray-100 p-4 rounded-lg shadow-inner">
             <OTPInput
-              value={OTP}
+              value={otp}
               onChange={setOTP}
               autoFocus
               OTPLength={6}
@@ -65,14 +90,14 @@ const OTP = () => {
             onClick={handleResendEmail}
             className="text-[#613CB1] hover:text-blue-700 font-semibold mb-2"
           >
-            Resend Email
+            Resend OTP
           </button>
-          <p className="text-gray-600 mb-2 text-sm">Incorrect email entered?</p>
+          <p className="text-gray-600 mb-2 text-sm">Incorrect FPS-Id entered?</p>
           <button
-            onClick={handleEmailChange}
+            onClick={handleidChange}
             className="text-[#613CB1] hover:text-blue-700 font-semibold"
           >
-            Correct your Email
+            Correct your FPS-Id
           </button>
         </div>
       </div>
