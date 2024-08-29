@@ -19,11 +19,10 @@ final class ProductFailure extends ProductState {
   ProductFailure(this.message);
 }
 
-
 final class ProductSuccess extends ProductState {
-  final String message;
+  List<Product> products;
 
-  ProductSuccess(this.message);
+  ProductSuccess(this.products);
 }
 
 class Product extends StatefulWidget {
@@ -54,20 +53,20 @@ class _ProductStateState extends State<Product> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+
       width: 160,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
+      // decoration: BoxDecoration(
+      //   color: Colors.white,
+      //   borderRadius: BorderRadius.circular(8),
+      //   boxShadow: [
+      //     BoxShadow(
+      //       color: Colors.grey.withOpacity(0.2),
+      //       spreadRadius: 1,
+      //       blurRadius: 5,
+      //       offset: const Offset(0, 3),
+      //     ),
+      //   ],
+      // ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -80,8 +79,8 @@ class _ProductStateState extends State<Product> {
                     child: Container(
                       width: 60,
                       height: 70,
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      decoration: BoxDecoration(
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      decoration: const BoxDecoration(
                         color: AppColors.secondary,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
@@ -106,57 +105,76 @@ class _ProductStateState extends State<Product> {
             ],
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(8, 0, 8, 5),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+            decoration: const BoxDecoration(
                 color: AppColors.secondary,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Text(widget.product_name,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w500)),
+                Text(
+                    '₹' + widget.price.toString() + " / " + widget.product_size,
+                    style: TextStyle(
+                        fontSize: 14,
+                        height: 0,
+                        color: Colors.grey.shade600,
+                        fontWeight: FontWeight.w400)),
+                Row(
                   children: [
-                    Text(widget.product_name,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: AppColors.black,
-                            fontWeight: FontWeight.w500)),
-                    Text(
-                        '₹' +
-                            widget.price.toString() +
-                            " / " +
-                            widget.product_size,
-                        style: TextStyle(
-                            fontSize: 14,
-                            height: 0,
-                            color: Colors.grey.shade500,
-                            fontWeight: FontWeight.w400)),
+                    Expanded(
+                      child: Container(
+                        height: 30,
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: widget.cart == 0
+                            ? InkWell(
+                                onTap: () => setState(() {
+                                      widget.cart++;
+                                    }),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Add to Cart',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14)),
+                                  ],
+                                ))
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
+                                      onTap: () => setState(() {
+                                            widget.cart--;
+                                          }),
+                                      child: const Icon(Icons.remove,
+                                          color: Colors.white, size: 20)),
+                                  Text(widget.cart.toString(),
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 16)),
+                                  InkWell(
+                                      onTap: () => setState(() {
+                                            widget.cart++;
+                                          }),
+                                      child: const Icon(Icons.add,
+                                          color: Colors.white, size: 20)),
+                                ],
+                              ),
+                      ),
+                    ),
                   ],
-                ),
-                Container(
-                  height: 30,
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.remove, color: Colors.white, size: 20),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text(widget.cart.toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Icon(Icons.add, color: Colors.white, size: 20),
-                    ],
-                  ),
                 )
               ],
             ),

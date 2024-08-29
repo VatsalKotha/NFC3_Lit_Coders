@@ -23,7 +23,7 @@ class _BottomnavbarState extends State<bottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: AppColors.primaryAccent,
+      backgroundColor: AppColors.white,
       showUnselectedLabels: true,
       enableFeedback: true,
       showSelectedLabels: true,

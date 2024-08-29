@@ -26,13 +26,24 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                 }));
 
         if (response.statusCode == 200) {
+          List<Product> products = [];
+          for (var product in response.data['products']) {
+            products.add(Product(
+              cart: product['cart'],
+              price: product['price'].toDouble(),
+              product_category: product['product_category'],
+              product_id: product['product_id'],
+              product_image: product['product_image'],
+              product_name: product['product_name'],
+              product_size: product['product_size'],
+            ));
+          }
           emit(ProductSuccess(
-            'Product Loaded Successfully',
+            products,
           ));
         } else {
           emit(ProductFailure('Failed to send OTP'));
         }
-        print(response);
       } catch (e) {
         emit(ProductFailure(e.toString()));
       }

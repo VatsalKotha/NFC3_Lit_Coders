@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               !isOtpSent
                   ? Column(
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter ration number';
+                                return 'Please enter ration card number';
                               }
                               return null;
                             },

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => ProductBloc(Dio())),
       ],
       child: GetMaterialApp(
-          title: 'Flutter Demo',
+          title: 'Ration Go!',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
