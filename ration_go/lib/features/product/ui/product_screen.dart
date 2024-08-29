@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
@@ -34,6 +35,23 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            AppColors.primary,
+            AppColors.primary,
+          ]),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: () {
+            Get.toNamed('/cart');
+          },
+          icon: Icon(Icons.shopping_cart, color: Colors.white),
+        ),
+      ),
       appBar: AppBar(
         centerTitle: false,
         scrolledUnderElevation: 0.0,
