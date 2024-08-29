@@ -14,9 +14,25 @@ const OTP = () => {
 
   const handleidChange = () => navigate("/");
 
-  const handleResendEmail = () => {
-    console.log("Resend verification email to:", email);
+  const handleResendEmail = async (e) => {
+    e.preventDefault();
+
+    console.log("Resend verification email to:", fpsId);
     toast.info("Verification email resent!", { autoClose: 3000 });
+
+    try {
+      const response = await axios.post("https://nfc3-lit-coders-i8r5.onrender.com/auth/send_otp_fps", {
+        fps_id: fpsId,
+      });
+
+      if (response.status === 200) {
+        toast.success("OTP sent successfully! Please check your email.", { autoClose: 3000 });
+      } 
+    } catch (error) {
+      toast.error("FPS Id doesnt exist.", { autoClose: 3000 });
+      console.error("Network error:", error);
+    }
+    
   };
 
   const handleSubmit = async (e) => {

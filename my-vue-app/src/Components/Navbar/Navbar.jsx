@@ -1,57 +1,38 @@
 import React from 'react';
 import { FaClipboardList, FaTruck, FaCheck, FaBoxOpen, FaCogs, FaTshirt, FaShippingFast, FaClipboardCheck, FaTimesCircle, FaSignOutAlt } from 'react-icons/fa';
 
-const Sidebar = () => {
+const Sidebar = ({ onTabClick, activeTab }) => {
+  const tabs = [
+    { title: "Dashboard", icon: <FaClipboardList /> },
+    { title: "All Orders", icon: <FaClipboardCheck /> },
+    { title: "Orders Placed", icon: <FaCheck /> },
+    { title: "Orders Out For Pickup", icon: <FaTruck /> },
+    { title: "Orders Received", icon: <FaBoxOpen /> },
+    { title: "Orders Processing", icon: <FaCogs /> },
+    { title: "Orders Processed", icon: <FaTshirt /> },
+    { title: "Orders Out For Delivery", icon: <FaShippingFast /> },
+    { title: "Orders Delivered", icon: <FaClipboardCheck /> },
+    { title: "Orders Cancelled", icon: <FaTimesCircle /> },
+  ];
+
   return (
-    <div className="w-64 h-screen bg-custom-purple 600 text-white">
+    <div className="w-64 h-screen bg-[#613CB1] text-white">
       <div className="flex items-center justify-center p-4 text-xl font-bold border-b border-blue-500">
         <span className="mr-2">RationGo</span>
       </div>
       <ul className="mt-5">
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaClipboardList className="mr-3" />
-          <span>Dashboard</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaClipboardCheck className="mr-3" />
-          <span>All Orders</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaCheck className="mr-3" />
-          <span>Orders Placed</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaTruck className="mr-3" />
-          <span>Orders Out For Pickup</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaBoxOpen className="mr-3" />
-          <span>Orders Received</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaCogs className="mr-3" />
-          <span>Orders Processing</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaTshirt className="mr-3" />
-          <span>Orders Processed</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaShippingFast className="mr-3" />
-          <span>Orders Out For Delivery</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaClipboardCheck className="mr-3" />
-          <span>Orders Delivered</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaTimesCircle className="mr-3" />
-          <span>Orders Cancelled</span>
-        </li>
-        <li className="flex items-center p-4 hover:bg-orange-500 cursor-pointer">
-          <FaSignOutAlt className="mr-3" />
-          <span>Logout</span>
-        </li>
+        {tabs.map((tab) => (
+          <li
+            key={tab.title}
+            onClick={() => onTabClick(tab.title)} 
+            className={`flex items-center p-4 cursor-pointer ${
+              activeTab === tab.title ? 'bg-orange-500' : 'hover:bg-orange-500'
+            }`}
+          >
+            {tab.icon}
+            <span className="ml-3">{tab.title}</span>
+          </li>
+        ))}
       </ul>
     </div>
   );
