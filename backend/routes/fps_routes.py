@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.globalproduct_model import GlobalProduct
@@ -125,15 +125,10 @@ def update_order():
 
         if "order_status" in data:
             order.order_status = data["order_status"]
-
-        if "expected_fulfilment_date" in data:
-            order.expected_fulfilment_date = data["expected_fulfilment_date"], 
-
-        db.fps.find_one_and_update(
+            db.fps.find_one_and_update(
             {"fps_id": fps_id, "orders.order_id": order_id},
             {"$set": {
                 "orders.$.order_status": order.order_status,
-                "orders.$.expected_fulfilment_date": order.expected_fulfilment_date
             }}
         )
 
