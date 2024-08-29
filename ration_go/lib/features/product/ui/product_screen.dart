@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
+import 'package:ration_go/features/product/bloc/product_bloc.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -12,6 +14,14 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    context.read<ProductBloc>().add(GetProducts());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
