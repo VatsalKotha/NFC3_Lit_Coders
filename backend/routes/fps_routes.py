@@ -42,9 +42,44 @@ def add_or_update_product():
 
     
 @fps_bp.route('/get_global_products', methods=['POST'])
+@jwt_required()
 def get_global_products():
     try:
+        current_user = get_jwt_identity()
+        fps_id = current_user["fps_id"]
+        
+        # Fetch the FPS store using the fps_id from the current user
+        fps_store = get_store_by_fps_id(fps_id)
+        
+        # Convert FPS store products to a dictionary with product_id as the key
+        fps_products_dict = {prod.product_id: prod for prod in fps_store.products}
+        
         products = db.products.find()
-        return jsonify({"products": [GlobalProduct.from_dict(prod).to_dict() for prod in products]}), 200
+        global_products = []
+        
+        for prod in products:
+            global_product = GlobalProduct.from_dict(prod).to_dict()
+            
+            if global_product["product_id"] in fps_products_dict:
+                fps_product = fps_products_dict[global_product["product_id"]]
+                global_product.update({
+                    "available_quantity": fps_product.available_quantity,
+                    "base_cost_aay": fps_product.base_cost_aay,
+                    "base_cost_phh": fps_product.base_cost_phh,
+                    "base_cost_bpl": fps_product.base_cost_bpl
+                })
+            else:
+                global_product.update({
+                    "available_quantity": 0,
+                    "base_cost_aay": 0,
+                    "base_cost_phh": 0,
+                    "base_cost_bpl": 0
+                })
+            
+            global_products.append(global_product)
+        
+        return jsonify({"products": global_products}), 200
+    
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+
