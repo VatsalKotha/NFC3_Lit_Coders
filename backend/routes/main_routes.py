@@ -61,7 +61,7 @@ def get_store_products():
                 }
                 detailed_products.append(detailed_product)
 
-        return jsonify({"products": detailed_products,"user":user,"fps_store":fps_store}), 200
+        return jsonify({"products": detailed_products,"user":user.to_dict(),"fps_store":fps_store.to_dict()}), 200
 
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
