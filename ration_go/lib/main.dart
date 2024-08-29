@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => AuthBloc(Dio()),
         ),
-        BlocProvider(create: (BuildContext context) => ProductBloc()),
+        BlocProvider(create: (BuildContext context) => ProductBloc(Dio())),
       ],
       child: GetMaterialApp(
           title: 'Flutter Demo',
