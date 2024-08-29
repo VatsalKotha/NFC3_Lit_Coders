@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/constants.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
@@ -214,7 +215,7 @@ class _CartState extends State<Cart> {
                                 'key': 'rzp_test_1DP5mmOlF5G5ag',
                                 'amount': total * 100,
                                 'name': 'RationGo',
-                                'description': 'Payment for order',
+                                'description': 'Payment for ration order',
                               });
 
                               Dio _dio = Dio();
@@ -242,6 +243,7 @@ class _CartState extends State<Cart> {
                                       backgroundColor: AppColors.primary,
                                     ),
                                   );
+                                  Get.back();
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
