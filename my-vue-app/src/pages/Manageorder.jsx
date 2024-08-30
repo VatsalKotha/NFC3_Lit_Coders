@@ -215,7 +215,9 @@ const ManageOrder = () => {
                 className="w-full p-2 border border-gray-300 rounded-md bg-white text-gray-800 shadow-md"
               >
                 <option value="Processing">Processing</option>
-                <option value="Shipped">Shipped</option>
+                <option value="Received">Received</option>
+                <option value="Processed">Processed</option>
+                <option value="Out For Delivery">Out For Delivery</option>
                 <option value="Delivered">Delivered</option>
                 <option value="Cancelled">Cancelled</option>
               </select>
@@ -271,9 +273,11 @@ const ManageOrder = () => {
               className="w-full p-2 border border-gray-300 rounded-md bg-white text-gray-800 shadow-md"
             >
               <option value="Processing">Processing</option>
-              <option value="Shipped">Shipped</option>
-              <option value="Delivered">Delivered</option>
-              <option value="Cancelled">Cancelled</option>
+                <option value="Received">Received</option>
+                <option value="Processed">Processed</option>
+                <option value="Out For Delivery">Out For Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
             </select>
           </div>
 

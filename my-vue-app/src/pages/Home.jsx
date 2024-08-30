@@ -60,9 +60,8 @@ const Home = () => {
         <h1 className="text-2xl font-bold mb-6">FPS Management Portal</h1>
         {activeTab === "Dashboard" && (
           <div className="grid grid-cols-3 gap-6">
-            <Card title="All Orders" description="Manage all of your orders" icon={<FaClipboardCheck />} onClick={() => handleTabClick("All Orders")} />
-            <Card title="Orders Placed" description="Manage all currently placed orders" icon={<FaCheck />} onClick={() => handleTabClick("Orders Placed")} />
             <Card title="Manage / Inventory" description="Manage all your SKU and Inventory" icon={<FaTruck />} onClick={() => handleTabClick("Manage / Inventory")} />
+            <Card title="All Orders" description="Manage all of your orders" icon={<FaClipboardCheck />} onClick={() => handleTabClick("All Orders")} />
             <Card title="Orders Received" description="Manage all currently picked up and received orders" icon={<FaBoxOpen />} onClick={() => handleTabClick("Orders Received")} />
             <Card title="Orders Processing" description="Manage all currently processing orders" icon={<FaCogs />} onClick={() => handleTabClick("Orders Processing")} />
             <Card title="Orders Processed" description="Manage all currently processed orders" icon={<FaTshirt />} onClick={() => handleTabClick("Orders Processed")} />
