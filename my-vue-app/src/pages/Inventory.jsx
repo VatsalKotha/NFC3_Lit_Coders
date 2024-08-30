@@ -49,13 +49,20 @@ const Inventory = () => {
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
         {products.map((product) => (
-          <ProductCard
-            key={product.product_id}
-            image={product.product_image}
-            name={product.product_name}
-            size={product.product_size}
-            price={product.base_cost_aay}
-          />
+      <ProductCard
+      key={product.product_id}
+      product_id={product.product_id} 
+      image={product.product_image}
+      name={product.product_name}
+      size={product.product_size}
+      price={product.base_cost_aay}
+      available_quantity={product.available_quantity}
+      base_cost_phh={product.base_cost_phh}
+      base_cost_aay={product.base_cost_aay}
+      base_cost_bpl={product.base_cost_bpl}
+    />
+    
+      
         ))}
       </div>
     </div>

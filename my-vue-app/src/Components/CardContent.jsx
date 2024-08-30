@@ -74,7 +74,7 @@ const CardContent = ({ cardTitle }) => {
         const endpoint = "https://nfc3-lit-coders-i8r5.onrender.com/fps/get_store_orders";
         const response = await axios.post(endpoint, {}, {
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyNDk1MTg5MywianRpIjoiZjU2NTY5OWYtNTJlMS00MmQ1LTg4ZjUtMDQ3MWYwNjNhNjg2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJmcHNfaWQiOiJGUFMwMDIifSwibmJmIjoxNzI0OTUxODkzLCJleHAiOjE3MjUwMzgyOTN9.IT7lXkLkdYlSqBf3gIgMHoihDRC3ErduCtwUTk_evKc',
+            'Authorization': `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
             'Content-Type': 'application/json'
           }
         });
