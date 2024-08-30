@@ -152,7 +152,7 @@ def add_order():
         total_cart_quantity = sum([item.quantity for item in user.cart])
         total_capacity = user.total_monthly_quantity
         
-        if user.current_quantity_consumed == 0 and total_cart_quantity > total_capacity:
+        if total_cart_quantity > (total_capacity-user.current_quantity_consumed ):
             return jsonify({"msg": "Total cart quantity exceeds your monthly capacity"}), 400
         
         order_id = "ORDER" + str(db.orders.count_documents({}) + 1).zfill(4)

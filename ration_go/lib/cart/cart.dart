@@ -211,12 +211,14 @@ class _CartState extends State<Cart> {
                           SizedBox(height: 20),
                           InkWell(
                             onTap: () async {
-                              Razorpay().open({
-                                'key': 'rzp_test_1DP5mmOlF5G5ag',
-                                'amount': total * 100,
-                                'name': 'RationGo',
-                                'description': 'Payment for ration order',
-                              });
+                              if (payment_method == "Online") {
+                                Razorpay().open({
+                                  'key': 'rzp_test_1DP5mmOlF5G5ag',
+                                  'amount': total * 100,
+                                  'name': 'RationGo',
+                                  'description': 'Payment for ration order',
+                                });
+                              }
 
                               Dio _dio = Dio();
                               SharedPreferences prefs =
