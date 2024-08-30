@@ -62,9 +62,9 @@ class _MyordersState extends State<Myorders> {
         ),
         child: IconButton(
           onPressed: () {
-            Get.toNamed('/cart');
+            Get.toNamed('/chat');
           },
-          icon: Icon(Icons.shopping_cart, color: Colors.white),
+          icon: Icon(Icons.chat_bubble_outline, color: Colors.white),
         ),
       ),
       appBar: AppBar(

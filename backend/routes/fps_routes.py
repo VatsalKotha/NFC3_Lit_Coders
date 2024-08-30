@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from models.chat_model import ChatMessage
 from models.globalproduct_model import GlobalProduct
 from models.product_model import Product
 from settings.auth_utils import get_user_by_ration_card_id, get_store_by_fps_id
@@ -138,3 +139,58 @@ def update_order():
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
 
+
+@fps_bp.route('/add_chat_message', methods=['POST'])
+def add_chat_message():
+    try:
+        data = request.get_json()
+
+        ration_card_id = data.get("ration_card_id")
+        fps_id = data.get("fps_id")
+        message_text = data.get("message")
+        is_sender = data.get("is_sender")
+
+        if not all([ration_card_id, fps_id, message_text, is_sender is not None]):
+            return jsonify({"msg": "Missing required fields"}), 400
+
+        new_message = ChatMessage(ration_card_id=ration_card_id, fps_id=fps_id, message=message_text, is_sender=is_sender)
+        chat_data = db.chats.find_one({"ration_card_id": ration_card_id, "fps_id": fps_id})
+
+        if chat_data:
+            db.chats.update_one(
+                {"ration_card_id": ration_card_id, "fps_id": fps_id},
+                {"$push": {"messages": new_message.to_dict()}}
+            )
+        else:
+            db.chats.insert_one({
+                "ration_card_id": ration_card_id,
+                "fps_id": fps_id,
+                "messages": [new_message.to_dict()]
+            })
+
+        return jsonify({"msg": "Message sent successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+
+
+@fps_bp.route('/get_chat_messages', methods=['POST'])
+def get_chat_messages():
+    try:
+        data = request.get_json()
+
+        ration_card_id = data.get("ration_card_id")
+        fps_id = data.get("fps_id")
+
+        if not all([ration_card_id, fps_id]):
+            return jsonify({"msg": "ration_card_id and fps_id are required"}), 400
+
+        chat_data = db.chats.find_one({"ration_card_id": ration_card_id, "fps_id": fps_id})
+
+        if chat_data:
+            return jsonify({"messages": chat_data.get("messages", [])}), 200
+        else:
+            return jsonify({"msg": "No chat history found"}), 404
+
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
