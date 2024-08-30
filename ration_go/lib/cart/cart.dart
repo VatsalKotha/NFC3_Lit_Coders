@@ -83,11 +83,16 @@ class _CartState extends State<Cart> {
                                 fontSize: 18,
                                 color: AppColors.black,
                                 fontWeight: FontWeight.w600)),
-                        Text('Total: ₹ ' + total.toString(),
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: AppColors.black,
-                                fontWeight: FontWeight.w600)),
+                        InkWell(
+                          onTap: () {
+                            setState(() {});
+                          },
+                          child: Text('Total: ₹ ' + total.toString(),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w600)),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -139,8 +144,16 @@ class _CartState extends State<Cart> {
                           Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: AppColors.secondary,
-                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,10 +245,14 @@ class _CartState extends State<Cart> {
                                       "payment_method": payment_method,
                                       "payment_id": payment_id,
                                     },
-                                    options: Options(headers: {
-                                      "Authorization":
-                                          "Bearer ${prefs.getString("access_token")}",
-                                    }));
+                                    options: Options(
+                                        headers: {
+                                          "Authorization":
+                                              "Bearer ${prefs.getString("access_token")}",
+                                        },
+                                        validateStatus: (status) {
+                                          return status! < 500;
+                                        }));
 
                                 if (response.statusCode == 200) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -249,7 +266,8 @@ class _CartState extends State<Cart> {
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Failed to place order'),
+                                      content: Text('Failed to place order: ' +
+                                          response.data['msg']),
                                       backgroundColor: AppColors.primary,
                                     ),
                                   );
@@ -296,6 +314,9 @@ class _CartState extends State<Cart> {
                   ],
                 ));
           } else {
+            if (state is ProductFailure) {
+              print(state.message);
+            }
             return const Center(
               child: CircularProgressIndicator(),
             );

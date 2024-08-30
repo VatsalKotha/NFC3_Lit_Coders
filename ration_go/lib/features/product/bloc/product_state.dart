@@ -227,7 +227,7 @@ class _ProductCart extends State<ProductCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+      margin: const EdgeInsets.fromLTRB(0, 10, 10, 0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
@@ -317,11 +317,9 @@ class _ProductCart extends State<ProductCart> {
                                       widget.actual_price,
                                       context));
 
-                                  if (widget.quantity == 0) {
-                                    context
-                                        .read<ProductBloc>()
-                                        .add(GetProducts());
-                                  }
+                                  // context
+                                  //     .read<ProductBloc>()
+                                  //     .add(GetProducts());
                                 }),
                             child: const Icon(Icons.remove,
                                 color: Colors.white, size: 20)),
@@ -336,9 +334,9 @@ class _ProductCart extends State<ProductCart> {
                                       widget.quantity,
                                       widget.actual_price,
                                       context));
-                                  context
-                                      .read<ProductBloc>()
-                                      .add(GetProducts());
+                                  // context
+                                  //     .read<ProductBloc>()
+                                  //     .add(GetProducts());
                                 }),
                             child: const Icon(Icons.add,
                                 color: Colors.white, size: 20)),
