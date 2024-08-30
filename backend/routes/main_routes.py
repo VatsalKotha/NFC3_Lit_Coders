@@ -1,3 +1,4 @@
+from random import Random
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from models.order_model import Order, ProductOrder
@@ -155,7 +156,7 @@ def add_order():
         if total_cart_quantity > (total_capacity-user.current_quantity_consumed ):
             return jsonify({"msg": "Total cart quantity exceeds your monthly capacity"}), 400
         
-        order_id = "ORDER" + str(db.orders.count_documents({}) + 1).zfill(4)
+        order_id = "ORDER" + str(Random().randint(1000, 9999))
         order_type = request.json.get("order_type")
         payment_method = request.json.get("payment_method")
         payment_id = request.json.get("payment_id")

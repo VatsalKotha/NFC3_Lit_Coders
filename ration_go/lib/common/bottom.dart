@@ -51,7 +51,7 @@ class _BottomnavbarState extends State<bottomNavbar> {
           icon: Icon(
             Icons.history,
           ),
-          label: 'History',
+          label: 'My Orders',
         ),
         BottomNavigationBarItem(
             icon: Icon(
@@ -67,10 +67,10 @@ class _BottomnavbarState extends State<bottomNavbar> {
           Get.offAllNamed('/product');
         }
         if (value == 2 && widget.currentIndex != 2) {
-          Get.offAllNamed('/reports');
+          Get.offAllNamed('/myorders');
         }
         if (value == 3 && widget.currentIndex != 3) {
-          Get.offAllNamed('/Profile');
+          Get.offAllNamed('/profile');
         }
       },
     );
