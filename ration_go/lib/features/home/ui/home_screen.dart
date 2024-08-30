@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   order_type == 'Delivery'
                                       ? state.user['address']
-                                      : state.fps_store['address'],
+                                      : state.fps_store['store_name'],
                                   maxLines: 1,
                                   style: TextStyle(
                                     color: Colors.white,

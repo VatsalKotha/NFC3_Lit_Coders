@@ -199,3 +199,30 @@ def add_order():
 
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
+
+
+@main_bp.route('/get_my_orders', methods=['POST'])
+@jwt_required()
+def get_store_orders():
+    try:
+        current_user = get_jwt_identity()
+        ration_card_id = current_user["ration_card_id"]
+        
+        user = get_user_by_ration_card_id(ration_card_id)
+        orders_with_user_details = []
+
+        fps_store = get_store_by_fps_id(user.fps_code)
+
+        for order in fps_store.orders:
+
+            if order.ration_card_id == ration_card_id:
+                order_dict = order.to_dict()
+                order_dict['user'] = user.to_dict()  
+                order_dict['store_name'] = fps_store.store_name
+                order_dict['address'] = fps_store.address
+                orders_with_user_details.append(order_dict)
+        
+        return jsonify({"orders": orders_with_user_details}), 200
+    
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500

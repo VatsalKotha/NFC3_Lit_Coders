@@ -86,7 +86,7 @@ class _BottomsheetState extends State<Bottomsheet> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Delivery by",
+                              "Delivery",
                               style: TextStyle(
                                   fontSize: 20,
                                   color: order_type == 'Delivery'
@@ -161,7 +161,7 @@ class _BottomsheetState extends State<Bottomsheet> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Pickup by",
+                              "Pickup",
                               style: TextStyle(
                                   fontSize: 20,
                                   color: order_type == 'Pickup'
@@ -181,7 +181,9 @@ class _BottomsheetState extends State<Bottomsheet> {
                           ],
                         ),
                         Text(
-                          widget.state.fps_store['address'],
+                          widget.state.fps_store['store_name'] +
+                              ", " +
+                              widget.state.fps_store['address'],
                           style: TextStyle(
                               color: order_type == 'Pickup'
                                   ? AppColors.white

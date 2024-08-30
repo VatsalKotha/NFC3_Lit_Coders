@@ -174,7 +174,9 @@ class _CartState extends State<Cart> {
                                 Text(
                                     order_type == 'Delivery'
                                         ? state.user['address']
-                                        : state.fps_store['address'],
+                                        : state.fps_store['store_name'] +
+                                            ", " +
+                                            state.fps_store['address'],
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: AppColors.black,
