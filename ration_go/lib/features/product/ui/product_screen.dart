@@ -169,16 +169,16 @@ class _ProductScreenState extends State<ProductScreen> {
                                     product.product_category == "Pulses")
                                 .toList(),
                           )),
-                      if (state.user['has_lpg'])
+                      if (state.user['has_LPG'])
                         Divider(color: Colors.grey.shade300),
                       //
-                      if (state.user['has_lpg'])
+                      if (state.user['has_LPG'])
                         const Text("Fuel and Gas",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.black)),
-                      if (state.user['has_lpg'])
+                      if (state.user['has_LPG'])
                         Row(
                           children: [
                             Expanded(

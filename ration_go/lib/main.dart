@@ -14,6 +14,7 @@ import 'package:ration_go/features/home/ui/home_screen.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
 import 'package:ration_go/features/product/ui/product_screen.dart';
 import 'package:ration_go/myorders/myorders.dart';
+import 'package:ration_go/myorders/orderdetails.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,6 +71,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/myorders',
               page: () => Myorders(),
+              transition: gt.Transition.noTransition,
+            ),
+            GetPage(
+              name: '/orderdetails',
+              page: () => Orderdetails(),
               transition: gt.Transition.noTransition,
             ),
           ]),
