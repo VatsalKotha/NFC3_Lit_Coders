@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        'custom-purple': '#613CB1', // Add custom color
+        'custom-purple': '#6448AF', // Add custom color
+        'custom-purple-accent': '#AD9CD5', // Add custom color
       },
     },
   },
