@@ -5,7 +5,7 @@ import OTP from "./pages/OTP"
 import Home from "./pages/Home"
 import Footer from './Components/Footer';
 import Inventory from './pages/Inventory';
-import Manageorder from "./Components/Manageorder"
+import Manageorder from "./pages/Manageorder"
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/otp" element={<OTP />} />
         <Route path='/home' element={<Home/>} />
-        <Route path='/manage' element={<Manageorder/>} />
+        <Route path='/manage-order' element={<Manageorder/>} />
         <Route path="/inventory" element={<Inventory />} />
       </Routes>
     </Router>
