@@ -12,7 +12,7 @@ const Chat = () => {
       setInput('');
       // Simulate receiving a response from the store
       setTimeout(() => {
-        setMessages([...messages, { text: input, sender: 'user' }, { text: 'Response from store', sender: 'store' }]);
+        setMessages([...messages, { text: input, sender: 'user' }, { text: 'Hello, Welcome to RationGo !', sender: 'store' }]);
       }, 1000);
     }
   };
