@@ -202,8 +202,7 @@ class _OrderdetailsState extends State<Orderdetails> {
                                     ? widget.order['user']['address']
                                     : widget.order['store_name'] +
                                         ", " +
-                                        widget
-                                            .order['expected_fulfilment_date'],
+                                        widget.order['address'],
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: AppColors.black,

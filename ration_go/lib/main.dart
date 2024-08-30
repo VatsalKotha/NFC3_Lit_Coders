@@ -13,6 +13,7 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart' as gt;
 import 'package:ration_go/features/home/ui/home_screen.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
 import 'package:ration_go/features/product/ui/product_screen.dart';
+import 'package:ration_go/features/profile/ui/profile.dart';
 import 'package:ration_go/myorders/myorders.dart';
 import 'package:ration_go/myorders/orderdetails.dart';
 
@@ -76,6 +77,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/orderdetails',
               page: () => Orderdetails({}),
+              transition: gt.Transition.noTransition,
+            ),
+            GetPage(
+              name: '/profile',
+              page: () => ProfileScreen(),
               transition: gt.Transition.noTransition,
             ),
           ]),

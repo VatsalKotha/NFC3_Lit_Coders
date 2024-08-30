@@ -26,17 +26,17 @@ const ProductCard = ({ product_id, image, name, size, price, available_quantity,
         
         {/* Conditionally render base cost for PHH */}
         {base_cost_phh > 0 && (
-          <p className="text-gray-900 font-semibold mt-1">PHH Price: ${base_cost_phh.toFixed(2)}</p>
+          <p className="text-gray-900 font-semibold mt-1">PHH Price: ₹{base_cost_phh.toFixed(2)}</p>
         )}
 
         {/* Conditionally render base cost for AAY */}
         {base_cost_aay > 0 && (
-          <p className="text-gray-900 font-semibold mt-1">AAY Price: ${base_cost_aay.toFixed(2)}</p>
+          <p className="text-gray-900 font-semibold mt-1">AAY Price: ₹{base_cost_aay.toFixed(2)}</p>
         )}
 
         {/* Conditionally render base cost for BPL */}
         {base_cost_bpl > 0 && (
-          <p className="text-gray-900 font-semibold mt-1">BPL Price: ${base_cost_bpl.toFixed(2)}</p>
+          <p className="text-gray-900 font-semibold mt-1">BPL Price: ₹{base_cost_bpl.toFixed(2)}</p>
         )}
 
         <button

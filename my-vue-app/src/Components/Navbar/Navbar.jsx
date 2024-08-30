@@ -16,7 +16,7 @@ const Sidebar = ({ onTabClick, activeTab }) => {
   const tabs = [
     { title: "Dashboard", icon: <FaClipboardList /> },
     { title: "All Orders", icon: <FaClipboardCheck /> },
-    { title: "Orders Placed", icon: <FaCheck /> },
+    // { title: "Orders Placed", icon: <FaCheck /> },
     { title: "Manage / Inventory", icon: <FaTruck /> },
     { title: "Orders Received", icon: <FaBoxOpen /> },
     { title: "Orders Processing", icon: <FaCogs /> },
@@ -28,17 +28,20 @@ const Sidebar = ({ onTabClick, activeTab }) => {
   ];
 
   return (
-    <div className="w-64 h-screen bg-[#613CB1] text-white">
-      <div className="flex items-center justify-center p-4 text-xl font-bold border-b border-white">
+    <div className="w-64 h-screen bg-gradient-to-b from-custom-purple via-custom-purple to-custom-purple-accent text-white">
+      <div className="flex  flex-col  p-4 text-xl font-semibold border-b border-white">
         <span className="mr-2">RationGo!</span>
+        <span className="text-sm font-normal">Management System</span>
+     
       </div>
+      
       <ul className="mt-5">
         {tabs.map((tab) => (
           <li
             key={tab.title}
             onClick={() => handleTabClick(tab.title)}
             className={`flex items-center p-4 cursor-pointer ${
-              activeTab === tab.title ? 'bg-orange-500' : 'hover:bg-orange-500'
+              activeTab === tab.title ? 'bg-custom-purple-accent' : 'hover:bg-custom-purple'
             }`}
           >
             {tab.icon}

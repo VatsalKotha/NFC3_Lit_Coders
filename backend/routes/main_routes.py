@@ -160,7 +160,7 @@ def add_order():
         order_type = request.json.get("order_type")
         payment_method = request.json.get("payment_method")
         payment_id = request.json.get("payment_id")
-        order_status = "Pending"
+        order_status = "Received"
         expected_fulfilment_date = fps_store.next_available_date
 
         #calculate total amount
