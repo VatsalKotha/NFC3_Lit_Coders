@@ -188,7 +188,9 @@ def get_chat_messages():
         chat_data = db.chats.find_one({"ration_card_id": ration_card_id, "fps_id": fps_id})
 
         if chat_data:
-            return jsonify({"messages": chat_data.get("messages", [])}), 200
+            messages = chat_data.get("messages", [])
+            sorted_messages = sorted(messages, key=lambda x: datetime.fromisoformat(x['timestamp']), reverse=False)
+            return jsonify({"messages": sorted_messages}), 200
         else:
             return jsonify({"msg": "No chat history found"}), 404
 

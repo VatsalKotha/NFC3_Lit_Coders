@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ration_go/chat/chat_message.dart';
 import 'package:ration_go/colors.dart';
+import 'package:ration_go/common/constants.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -9,59 +11,92 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<Map<String, dynamic>> messages = [];
   TextEditingController _controller = TextEditingController();
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
-  void _sendMessage() async {
-    if (_controller.text.trim().isEmpty) return;
+  List<Map<String, dynamic>> messages = [];
 
-    _addMessage(_controller.text, true);
-    setState(() {});
-
-    _controller.clear();
+  @override
+  void initState() {
+    super.initState();
+    getChatMessages();
   }
 
-  void _addMessage(String text, bool isUserMessage) {
-    final int index = messages.length;
-    messages.add({'text': text, 'isUserMessage': isUserMessage});
-    _listKey.currentState?.insertItem(index);
-  }
-
-  Future<void> _generateBotResponse(String input) async {
+  void _addMessage(String text, bool isUserMessage) async {
     Dio dio = Dio();
-
-    final url = 'https://atharvmendhe18-sit-internal.hf.space/process';
-
-    final data = {
-      'text': input,
-    };
-
     try {
-      Response response = await dio.post(url,
-          data: data,
-          options: Options(headers: {
-            'Content-Type': 'application/json',
-            "Accept": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          }));
-
+      final response = await dio.post(
+        '${ServerConstants.server_url}/fps/add_chat_message',
+        data: {
+          "ration_card_id": "RC001",
+          "fps_id": "FPS002",
+          "message": text,
+          "is_sender": isUserMessage
+        },
+        options: Options(
+          validateStatus: (status) {
+            return status != null && status < 502;
+          },
+        ),
+      );
       if (response.statusCode == 200) {
-        final responseData = response.data;
-        // GoogleTranslator()
-        //     .translate(responseData['response'], from: 'en', to: 'mr')
-        //     .then((s) {
-        //   _addMessage(s.text, false);
-        // });
-
-        String response_op = responseData['response'];
-        _addMessage(response_op, false);
+        getChatMessages();
       } else {
-        print('Failed with status code: ${response.statusCode}');
+        print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      print(e);
     }
+  }
+
+  Future<void> getChatMessages() async {
+    Dio dio = Dio();
+    try {
+      final response = await dio.post(
+        '${ServerConstants.server_url}/fps/get_chat_messages',
+        data: {"ration_card_id": "RC001", "fps_id": "FPS002"},
+        options: Options(
+          validateStatus: (status) {
+            return status != null && status < 502;
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        List<Map<String, dynamic>> newMessages = [];
+        for (var message in response.data['messages']) {
+          newMessages.add({
+            'text': message['message'],
+            'isUserMessage': message['is_sender'],
+            'timestamp': message['timestamp']
+          });
+        }
+        setState(() {
+          messages = newMessages;
+        });
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _sendMessage() async {
+    if (_controller.text.trim().isEmpty) return;
+    final newMessage = {
+      'text': _controller.text,
+      'isUserMessage': true,
+      'timestamp': DateTime.now().toIso8601String()
+    };
+
+    // Add message to list and animated list
+    setState(() {
+      messages.insert(0, newMessage); // Insert at the beginning
+      _listKey.currentState?.insertItem(0); // Add to AnimatedList
+    });
+
+    _addMessage(_controller.text, true);
+    _controller.clear();
   }
 
   @override
@@ -79,30 +114,24 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: const EdgeInsets.only(bottom: 60),
         child: Column(
           children: [
-            messages.length > 0
+            messages.isNotEmpty
                 ? Expanded(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: AnimatedList(
-                            shrinkWrap: false,
-                            key: _listKey,
-                            reverse: true,
-                            initialItemCount: messages.length,
-                            itemBuilder: (context, index, animation) {
-                              final message =
-                                  messages[messages.length - 1 - index];
-                              return FadeTransition(
-                                opacity: animation,
-                                child: ChatMessage(
-                                  text: message['text'],
-                                  isUserMessage: message['isUserMessage'],
-                                ),
-                              );
-                            },
+                    child: AnimatedList(
+                      shrinkWrap: false,
+                      key: _listKey,
+                      reverse: true,
+                      initialItemCount: messages.length,
+                      itemBuilder: (context, index, animation) {
+                        final message = messages[index];
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ChatMessage(
+                            text: message['text'],
+                            isUserMessage: message['isUserMessage'],
+                            timestamp: message['timestamp'],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   )
                 : const SizedBox(),
