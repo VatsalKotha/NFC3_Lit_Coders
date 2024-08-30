@@ -4,40 +4,40 @@ Need For Code 3.0 - CodeTantra, Thadomal Shahani Engineering College, Mumbai
 
 * * *
 
-ℹ️** Project Description**
+ℹ️ **Project Description**
 
 RationGo! is a comprehensive online ration ordering system developed during Need For Code 3.0 by Thadomal Shahani Engineering College, Mumbai. The project facilitates seamless grocery ordering for users with ration cards, integrating a Flutter app for consumers, a Flask backend with MongoDB for data management, and a React web interface for store interactions. The system ensures efficient ration distribution and management.
 
 * * *
 
-❗** Problem Statement**
+❗**Problem Statement**
 
 Access to essential goods through ration cards can be cumbersome and inefficient. Users often face challenges in ordering and managing their ration requirements. RationGo! addresses these issues by providing a streamlined, digital platform for ration ordering, enhancing accessibility and convenience.
 
 * * *
 
-💡** Solution**
+💡**Solution**
 
 RationGo! consists of three main components:
 
--   📱** Flutter App:**  
+-   📱 **Flutter App:**  
     -   Enables users to browse and order ration items based on their ration card.  
     -   Features a product catalog with categories such as Food Grains, Cooking Essentials, and Pulses and Spices.  
     -   Includes a shopping cart, order summary, and payment integration for a complete shopping experience.  
     -   Provides users with notifications and order tracking.
 
--   🛠️** Flask Backend with MongoDB:**  
+-   🛠️ **Flask Backend with MongoDB:**  
     -   Manages user data, product information, and order processing.  
     -   Handles authentication, order management, and data storage.  
     -   Facilitates interaction between the Flutter app and the web interface.
 
--   🌐** React Web Interface for Stores:**  
+-   🌐 **React Web Interface for Stores:**  
     -   Allows store managers to view and manage orders, update product inventory, and handle store-related tasks.  
     -   Provides a comprehensive dashboard for tracking orders, sales, and product availability.
 
 * * *
 
-🛠️** Tech Stack**
+🛠️ **Tech Stack**
 
 -   **Mobile App Development:** Flutter
 -   **Backend & Database:** Flask, MongoDB
@@ -47,7 +47,7 @@ RationGo! consists of three main components:
 
 * * *
 
-\***\*📸** Screenshots\*\*
+📸 **Screenshots**
 
 -   **Flutter App:**
 
@@ -99,7 +99,7 @@ RationGo! consists of three main components:
 
 * * *
 
-🔮** Future Developments**
+🔮 **Future Developments**
 
 RationGo! aims to expand its functionality and reach through:
 
@@ -109,7 +109,7 @@ RationGo! aims to expand its functionality and reach through:
 
 * * *
 
-👥** Team Members**
+👥 **Team Members**
 
 -   Meet Chavan - <https://www.linkedin.com/in/meet-chavan/>
 -   Vatsal Kotha - <https://www.linkedin.com/in/vatsalkotha/>
@@ -118,7 +118,7 @@ RationGo! aims to expand its functionality and reach through:
 
 * * *
 
-🌟** Conclusion**
+🌟 **Conclusion**
 
 RationGo! represents a significant advancement in the digitization of ration distribution. By offering a streamlined, efficient platform for ordering and managing rations, the project enhances accessibility and convenience for users, contributing to a more effective and equitable ration distribution system.
 
