@@ -77,9 +77,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                   "quantity": event.quantity,
                   "actual_price": event.actual_price
                 },
-                options: Options(headers: {
-                  "Authorization": "Bearer ${prefs.getString("access_token")}",
-                }));
+                options: Options(
+                    headers: {
+                      "Authorization":
+                          "Bearer ${prefs.getString("access_token")}",
+                    },
+                    validateStatus: (status) {
+                      return status! >= 200 && status < 500;
+                    }));
 
         if (response.statusCode == 200) {
           GetProducts();
@@ -90,9 +95,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             ),
           );
         } else {
-          emit(ProductFailure('Failed to update cart'));
+          print(response.data);
+          GetProducts();
+          ScaffoldMessenger.of(event.context).showSnackBar(
+            SnackBar(
+              content: Text(response.data["msg"]),
+              backgroundColor: AppColors.primary,
+            ),
+          );
         }
       } catch (e) {
+        print(e);
         emit(ProductFailure(e.toString()));
       }
     });

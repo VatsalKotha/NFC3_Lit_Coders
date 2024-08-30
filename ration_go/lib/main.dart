@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/orderdetails',
-              page: () => Orderdetails(),
+              page: () => Orderdetails({}),
               transition: gt.Transition.noTransition,
             ),
           ]),

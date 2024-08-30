@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
 import 'package:ration_go/common/constants.dart';
+import 'package:ration_go/myorders/orderdetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Myorders extends StatefulWidget {
@@ -87,7 +88,7 @@ class _MyordersState extends State<Myorders> {
                     final order = orders[index];
                     return InkWell(
                       onTap: () {
-                        Get.toNamed('/orderdetails', arguments: order);
+                        Get.to(Orderdetails(order));
                       },
                       child: Card(
                         shadowColor: Colors.white,
