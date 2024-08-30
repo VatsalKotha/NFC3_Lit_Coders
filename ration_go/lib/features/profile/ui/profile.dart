@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ration_go/colors.dart';
 import 'package:ration_go/common/bottom.dart';
+import 'package:ration_go/features/auth/bloc/auth_bloc.dart';
 import 'package:ration_go/features/product/bloc/product_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -36,6 +38,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            AppColors.primary,
+            AppColors.primary,
+          ]),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: () {
+            Get.toNamed('/chat');
+          },
+          icon: Icon(Icons.chat_bubble_outline, color: Colors.white),
+        ),
+      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: false,
@@ -63,9 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
                         children: [
-                          // Icon(Icons.account_circle,
-                          //     size: 80, color: AppColors.primary),
-                          // const SizedBox(width: 16),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,6 +108,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ],
                             ),
+                          ),
+                          const SizedBox(width: 16),
+                          InkWell(
+                            onTap: () {
+                              context.read<AuthBloc>().add(LogoutEvent());
+                            },
+                            child: Icon(Icons.power_settings_new_rounded,
+                                size: 40, color: AppColors.primary),
                           ),
                         ],
                       ),
