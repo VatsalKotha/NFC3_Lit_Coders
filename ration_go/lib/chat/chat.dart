@@ -63,6 +63,11 @@ class _ChatScreenState extends State<ChatScreen> {
       );
       if (response.statusCode == 200) {
         List<Map<String, dynamic>> newMessages = [];
+
+        response.data['messages'].sort((a, b) {
+          return DateTime.parse(b['timestamp'])
+              .compareTo(DateTime.parse(a['timestamp']));
+        });
         for (var message in response.data['messages']) {
           newMessages.add({
             'text': message['message'],
