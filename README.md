@@ -109,12 +109,14 @@ RationGo! aims to expand its functionality and reach through:
 
 * * *
 
-👥 **Team Members**
-
--   Meet Chavan - <https://www.linkedin.com/in/meet-chavan/>
--   Vatsal Kotha - <https://www.linkedin.com/in/vatsalkotha/>
--   Gaurang Singhania - <https://www.linkedin.com/in/gaurang-singhania-613567250/>
--   Dhruv Mehta - <https://www.linkedin.com/in/dhruvmehta13/>
+👥 **Active Contributors**
+<hr>
+<p align="start">
+<a  href="[https://github.com/VatsalKotha/NFC3_Lit_Coders/graphs/contributors](https://github.com/VatsalKotha/NFC3_Lit_Coders/graphs/contributors)">
+  <img src="https://contrib.rocks/image?repo=VatsalKotha/NFC3_Lit_Coders"/>
+</a>
+</p>
+</br>
 
 * * *
 
